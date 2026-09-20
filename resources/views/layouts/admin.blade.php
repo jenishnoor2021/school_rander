@@ -176,10 +176,18 @@
           <li class="{{ (request()->segment(2) == 'videos') ? 'active' : '' }}"><a href="/admin/videos"><i class="fa fa-dashboard"></i> <span>Videos</span></a></li>
           <li class="{{ (request()->segment(2) == 'mediagalleryimage') ? 'active' : '' }}"><a href="/admin/mediagalleryimage"><i class="fa fa-dashboard"></i> <span>Media Gallery</span></a></li>
           <!--<li class="{{ (request()->segment(2) == 'activity') ? 'active' : '' }}"><a href="/admin/activity"><i class="fa fa-dashboard"></i> <span>Achievements</span></a></li>-->
-          <li class="{{ (request()->segment(2) == 'activitycategory') ? 'active' : '' }}"><a href="/admin/activitycategory"><i class="fa fa-dashboard"></i> <span>Activity</span></a></li>
+          @php($sidebarCategories = \App\Models\Category::orderBy('name')->get()->groupBy('type'))
+          @foreach(['achievement' => 'Achievements', 'activity' => 'Activities', 'event' => 'Events'] as $sidebarType => $sidebarLabel)
+          <li class="treeview {{ request()->is('admin/'.$sidebarType.'/categories') ? 'active menu-open' : '' }}">
+            <a href="{{ route('admin.categories.index', $sidebarType) }}"><i class="fa fa-folder"></i> <span>{{ $sidebarLabel }}</span><span class="pull-right-container"><i class="fa fa-angle-left pull-right"></i></span></a>
+            <ul class="treeview-menu">
+              @foreach($sidebarCategories->get($sidebarType, collect()) as $sidebarCategory)
+              <li><a href="{{ route('admin.categories.index', ['type' => $sidebarType, 'category' => $sidebarCategory->id]) }}"><i class="fa fa-circle-o"></i> {{ $sidebarCategory->name }}</a></li>
+              @endforeach
+            </ul>
+          </li>
+          @endforeach
           <li class="{{ (request()->segment(2) == 'popup') ? 'active' : '' }}"><a href="/admin/popup"><i class="fa fa-dashboard"></i> <span>Popup image</span></a></li>
-          <li class="{{ (request()->segment(2) == 'achivement') ? 'active' : '' }}"><a href="/admin/achivement"><i class="fa fa-dashboard"></i> <span>Achievements</span></a></li>
-          <li class="{{ (request()->segment(2) == 'event') ? 'active' : '' }}"><a href="/admin/event"><i class="fa fa-dashboard"></i> <span>Events</span></a></li>
           <li class="{{ (request()->segment(2) == 'brocher') ? 'active' : '' }}"><a href="/admin/brocher"><i class="fa fa-dashboard"></i> <span>Brocher</span></a></li>
           <li class="{{ (request()->segment(2) == 'contact') ? 'active' : '' }}"><a href="/admin/contact"><i class="fa fa-dashboard"></i> <span>Contact</span></a></li>
           <li class="{{ (request()->segment(2) == 'enquirey') ? 'active' : '' }}"><a href="/admin/enquirey"><i class="fa fa-dashboard"></i> <span>Inquiry</span></a></li>

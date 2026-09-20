@@ -1,200 +1,125 @@
 @extends('layouts.front')
 @section('content')
 
-<!-- Start Page Banner -->
-<div class="page-banner-area">
-   <div class="d-table">
-      <div class="d-table-cell">
-         <div class="container">
-            <div class="page-banner-content">
-               <h2>School Facilities</h2>
-               <ul>
-                  <li>
-                     <a href="{{URL::to('/')}}">Home</a>
-                  </li>
-                  <li>School Facilities</li>
-               </ul>
-            </div>
-         </div>
-      </div>
+<!-- Storybook Wonder Subpage Banner -->
+<section class="subpage-wonder-banner">
+   <!-- Floating Background Doodles -->
+   <div class="doodle-element doodle-star" style="top: 15%; left: 8%; opacity: 0.6;" aria-hidden="true">
+      <i class="fas fa-star" style="color: var(--honey-light); font-size: 1.5rem;"></i>
    </div>
-</div>
-<!-- End Page Banner -->
+   <div class="doodle-element doodle-star" style="bottom: 20%; right: 10%; opacity: 0.6;" aria-hidden="true">
+      <i class="fas fa-star" style="color: var(--saffron-light); font-size: 1.25rem;"></i>
+   </div>
 
-<!-- Start Blog Area -->
-<section class="blog-area ptb gray-bg">
    <div class="container">
-      <div class="section-title">
-         <span>Seven Step Pre-School</span>
-         <h2>School Facilities</h2>
-      </div>
-
-      <div class="row">
-         <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="single-blog-item bg1">
-               <div class="blog-image">
-                  <a href="#">
-                     <img src="{{asset('assets/img/staff_photo.JPG')}}" alt="teacher">
-                  </a>
-               </div>
-
-               <div class="blog-content">
-                  <h3>
-                     Highly Qualified And Experienced Faculties
-                  </h3>
-                  <p>The faculties of Seven Steps Pre-School are highly qualified, well-trained and well-experienced in their own respective field. They have been trained to impart education using the perfect method of teaching to suit the subject, topic and situation. Understanding the student’s individual requirements, they are capable of customizing the method of teaching without making compromise to the objectives. As expert teachers, they encourage the students acquire positive attitude and develop confidence through right kind of approach to grasp the course curriculum.</p>
-               </div>
-            </div>
-         </div>
-
-         <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="single-blog-item bg2">
-               <div class="blog-image">
-                  <a href="#">
-                     <img src="{{asset('assets/img/play-way.jpg')}}" alt="play-way">
-                  </a>
-               </div>
-
-               <div class="blog-content">
-                  <h3>
-                     Play-Way Method Of Teaching
-                  </h3>
-                  <p>The education process in Seven Steps Pre-School is a joyful experience. The students learn in an open and favourable study environment. Most of the education process are made enjoyable by adopting a play-way method. We call Education as ‘Edutainment’ as it is made an entertainment. Utmost care is taken to provide a stress less study environment.</p>
-               </div>
-            </div>
-         </div>
-
-         <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="single-blog-item bg3">
-               <div class="blog-image">
-                  <a href="#">
-                     <img src="{{asset('assets/img/water.jpg')}}" alt="water">
-                  </a>
-               </div>
-               <div class="blog-content">
-                  <h3>
-                     Mineral Drinking Water
-                  </h3>
-                  <p>Nothing comes above good health. The students and the staff at Seven Steps Pre-School have a facility to get the pure and the safe Mineral Water available all the time. 90% of human diseases are caused due to contaminated water. So Seven Steps Pre-School ensures the supply of Mineral Water to all its students and staff.</p>
-               </div>
-            </div>
-         </div>
-
-         <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="single-blog-item bg4">
-               <div class="blog-image">
-                  <a href="#">
-                     <img src="{{asset('assets/img/student_counsiling1.jpg')}}" alt="counselling">
-                  </a>
-               </div>
-               <div class="blog-content">
-                  <h3>
-                     A Separate Personal Student Counseling
-                  </h3>
-                  <p>A body has been formed in Seven Steps Pre-School to provide proper guidance to the students. It functions in the fashion of a consultancy service provided free of cost. Individual problems of the students and discussed and solutions are found under the guidance of the experts.</p>
-               </div>
-            </div>
-         </div>
-          <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="single-blog-item bg5">
-               <div class="blog-image">
-                  <a href="#">
-                     <img src="{{asset('assets/img/p_counsiling.JPG')}}" alt="counselling">
-                  </a>
-               </div>
-               <div class="blog-content">
-                  <h3>
-                     Parents Counseling
-                  </h3>
-                  <p>The school provides parents counseling facilities to assist them with their child's academic and emotional well-being. The counseling sessions are conducted by qualified professionals who provide guidance and support to parents on a wide range of issues. This facility helps parents to better understand their child's strengths and weaknesses, identify any concerns or issues, and learn how to support their child's academic and emotional development. The parents counseling facility is an essential part of the school's holistic approach towards education.</p>
-               </div>
-            </div>
-         </div>
-         <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="single-blog-item bg6">
-               <div class="blog-image">
-                  <a href="#">
-                     <img src="{{asset('assets/img/play.jpeg')}}" alt="counselling">
-                  </a>
-               </div>
-               <div class="blog-content">
-                  <h3>
-                     Creative Area
-                  </h3>
-                  <p>There are so many ways for children to explore and be creative. The creative area in a preschool classroom is a place where your little children can go creatively in drawing, expressing and playing.</p>
-               </div>
-            </div>
-         </div>
-         <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="single-blog-item bg2">
-               <div class="blog-image">
-                  <a href="#">
-                     <img src="{{asset('assets/img/crative_area.JPG')}}" alt="counselling">
-                  </a>
-               </div>
-               <div class="blog-content">
-                  <h3>
-                     Indoor Play Area
-                  </h3>
-                  <p>Indoor play area serve as great options to keep children busy and active. During their time in indoor play area kids are often faced with situations and challenges that help them develop vital skills. Interacting with others helps develop their imagination. Kids learn to be more expressive and curious.</p>
-               </div>
-            </div>
-         </div>
-         <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="single-blog-item bg5">
-               <div class="blog-image">
-                  <a href="#">
-                     <img src="{{asset('assets/img/cctv.jpg')}}" alt="counselling">
-                  </a>
-               </div>
-               <div class="blog-content">
-                  <h3>
-                     Cctv Secured Campus
-                  </h3>
-                  <p>As a public education centre, schools have a key responsibility to ensure the ongoing safety of both their students and teachers while on school premises. CCTV camera surveillance systems are increasingly being used in schools to maintain safety and security, allowing school and faculty staff to focus on their responsibilities and to prevent criminal activity taking place at the site.</p>
-               </div>
-            </div>
-         </div>
-         <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="single-blog-item bg6">
-               <div class="blog-image">
-                  <a href="#">
-                     <img src="{{asset('assets/img/fire.jpg')}}" alt="counselling">
-                  </a>
-               </div>
-               <div class="blog-content">
-                  <h3>
-                     Educational Field Trip
-                  </h3>
-                  <p>Children are active learners as they are constantly making connections with the world around them. With an innate drive to learn and explore, field trips are the perfect way for children to learn outside of a typical classroom setting.
-                     Field trips are both fun and memorable ways to promote academic success. One study indicates that “regardless of gender, ethnicity or socioeconomic status, youth who take educational trips have better grades because the trips made them more engaged, intellectually curious.” With culturally enriching field trips, students can make connections to other educational fields, gain first-hand experiences, and understand concepts on a deeper level.</p>
-               </div>
-            </div>
-         </div>
-         <div class="col-lg-4 col-md-6 col-sm-12">
-            <div class="single-blog-item bg3">
-               <div class="blog-image">
-                  <a href="#">
-                     <img src="{{asset('assets/img/smart_class.JPG')}}" alt="smart_classroom">
-                  </a>
-               </div>
-               <div class="blog-content">
-                  <h3>
-                     Smart Class
-                  </h3>
-                  <p>Classrooms are one of the main platforms where effective learning takes place. We have taken all the possible care while designing our world-class classrooms so that our students learn effectively from our teachers and get a facility of participative learning.</p>
-               </div>
-            </div>
+      <div class="reveal-pop">
+         <h1>School Facilities</h1>
+         <div class="breadcrumb-pill-trail">
+            <a href="{{ url('/') }}"><i class="fas fa-home"></i> Home</a> <i class="fas fa-angle-right" style="font-size: 0.75rem; opacity: 0.6;"></i>
+            <a href="{{ route('aboutUs') }}">About Us</a> <i class="fas fa-angle-right" style="font-size: 0.75rem; opacity: 0.6;"></i> <span>School Facilities</span>
          </div>
       </div>
    </div>
 </section>
-<!-- End Blog Area -->
 
-@include('includes.cat-area')
+<!-- Storybook Wave Divider -->
+<div class="storybook-wave wave-cream" aria-hidden="true">
+   <svg viewBox="0 0 1200 48" preserveAspectRatio="none">
+      <path d="M0,0 C150,40 350,-10 500,25 C650,60 900,5 1200,20 L1200,48 L0,48 Z"></path>
+   </svg>
+</div>
 
-<!-- class area start here -->
-@include('includes.admission-step')
-<!-- class area end here -->
+
+<section class="section-py bg-white">
+   <div class="container">
+      <div class="section-header reveal-pop">
+         <span class="section-tag"><i class="fas fa-shapes"></i> Inspiring Environment</span>
+         <h2>World-Class Facilities For Kids</h2>
+         <p>Every corner of Seven Steps Pre-School is designed to spark curiosity, ensure safety, and nurture physical and cognitive agility.</p>
+      </div>
+
+      <div class="facilities-mosaic-grid">
+         <div class="facility-explorer-card reveal-pop">
+            <div class="facility-card-media">
+               <img src="/assets/img/facility_01.jpg" alt="Online Appointment and Parent Counseling Center">
+            </div>
+            <h3>01. Online Appointment Counseling</h3>
+            <p>Parents can easily book appointments online for seamless admissions guidance, curriculum walkthroughs, and teacher consultations.</p>
+         </div>
+
+         <div class="facility-explorer-card reveal-pop">
+            <div class="facility-card-media">
+               <img src="/assets/img/facility_02.jpg" alt="Safe Transportation Fleet with GPS Tracking">
+            </div>
+            <h3>02. Safe Transport Fleet</h3>
+            <p>Well-maintained buses and vans with GPS tracking, CCTV cameras, female attendants, and first-aid kits across all Surat routes.</p>
+         </div>
+
+         <div class="facility-explorer-card reveal-pop">
+            <div class="facility-card-media">
+               <img src="/assets/img/facility_03.jpg" alt="Play Station and Dexterity Game Zone">
+            </div>
+            <h3>03. Play Station & Dexterity Zone</h3>
+            <p>Ergonomically designed soft play area with tunnels, slides, rocker toys, and balance beams that develop fine and gross motor skills.</p>
+         </div>
+
+         <div class="facility-explorer-card reveal-pop">
+            <div class="facility-card-media">
+               <img src="/assets/img/facility_04.jpg" alt="Smart Interactive Audio-Visual Classroom">
+            </div>
+            <h3>04. Audio-Visual Smart Rooms</h3>
+            <p>Modern interactive smart boards, phonics visualizers, and educational animated stories that make lessons vivid and unforgettable.</p>
+         </div>
+
+         <div class="facility-explorer-card reveal-pop">
+            <div class="facility-card-media">
+               <img src="/assets/img/facility_05.jpg" alt="Sensory Sand Pit Play Arena">
+            </div>
+            <h3>05. Sensory Sand Pit</h3>
+            <p>Hygienic, anti-bacterial sand play area encouraging sensory discovery, castle building, and collaborative creative play.</p>
+         </div>
+
+         <div class="facility-explorer-card reveal-pop">
+            <div class="facility-card-media">
+               <img src="/assets/img/facility_06.jpg" alt="Kids Discovery Science and Nature Corner">
+            </div>
+            <h3>06. Little Explorers Science Corner</h3>
+            <p>Hands-on nature discovery, magnet tables, magnifying glasses, and plant growth trays that awaken scientific curiosity.</p>
+         </div>
+
+         <div class="facility-explorer-card reveal-pop">
+            <div class="facility-card-media">
+               <img src="/assets/img/facility_07.jpg" alt="Creative Arts and Craft Studio">
+            </div>
+            <h3>07. Art & Craft Atelier</h3>
+            <p>Spacious studio stocked with non-toxic finger paints, clay, origami paper, and easels where little artists express freely.</p>
+         </div>
+
+         <div class="facility-explorer-card reveal-pop">
+            <div class="facility-card-media">
+               <img src="/assets/img/facility_08.jpg" alt="Safe Splash Pool and Water Play Station">
+            </div>
+            <h3>08. Splash Pool & Water Play</h3>
+            <p>Shallow, hygienic, temperature-monitored water fun zones for sensory cooling and water agility activities under supervision.</p>
+         </div>
+
+         <div class="facility-explorer-card reveal-pop">
+            <div class="facility-card-media">
+               <img src="/assets/img/facility_09.jpg" alt="Children's Illustrated Storybook Library">
+            </div>
+            <h3>09. Illustrated Story Library</h3>
+            <p>Vibrant cozy reading corners with hundreds of picture books, touch-and-feel tales, and fable storybooks fostering love for reading.</p>
+         </div>
+
+         <div class="facility-explorer-card reveal-pop">
+            <div class="facility-card-media">
+               <img src="/assets/img/facility_10.jpg" alt="Health and First-Aid Wellness Center">
+            </div>
+            <h3>10. Health & Wellness Center</h3>
+            <p>Dedicated medical sick bay staffed with first-aid certified attendants and emergency tie-ups with pediatric clinics in Surat.</p>
+         </div>
+      </div>
+   </div>
+</section>
 
 @endsection

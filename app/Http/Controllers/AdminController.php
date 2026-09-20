@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Achivement;
 use App\Models\Activity;
 use App\Models\Event;
+use App\Models\Category;
 use App\Models\Career;
 use App\Models\Contact;
 use App\Models\Enquirey;
@@ -19,7 +20,6 @@ use Illuminate\Routing\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Session;
 
 class AdminController extends Controller
@@ -99,12 +99,12 @@ class AdminController extends Controller
         $user->save();
 
         return redirect()->back()->with("success", "Password changed successfully !");
-
     }
 
     public function homePage(Request $request)
     {
-        return view('frontend.index');
+        $galleries = Galleryimage::where('is_show', 1)->latest()->take(8)->get();
+        return view('frontend.index', compact('galleries'));
     }
 
     public function aboutUs(Request $request)
@@ -114,12 +114,12 @@ class AdminController extends Controller
 
     public function management(Request $request)
     {
-        return view('frontend.management');
+        return view('frontend.managing-director');
     }
 
     public function principleMessage(Request $request)
     {
-        return view('frontend.principle-message');
+        return view('frontend.principal-message');
     }
 
     public function branchHead(Request $request)
@@ -129,7 +129,7 @@ class AdminController extends Controller
 
     public function inchargeMessage(Request $request)
     {
-        return view('frontend.incharge-message');
+        return view('frontend.coordinator');
     }
 
     public function circular(Request $request)
@@ -161,12 +161,12 @@ class AdminController extends Controller
 
     public function feesPay(Request $request)
     {
-        return view('frontend.fees-pay');
+        return view('frontend.fees-payment');
     }
 
     public function policy(Request $request)
     {
-        return view('frontend.policy');
+        return view('frontend.refund-cancel-policy');
     }
 
     public function career(Request $request)
@@ -176,9 +176,10 @@ class AdminController extends Controller
 
     public function academicActivities(Request $request)
     {
-        return view('frontend.academic-activities');
+        $categories = Category::where('type', 'activity')->orderBy('name')->get();
+        return $this->openFirstCategory($categories, 'activities.category');
     }
-    
+
     public function extraActivities(Request $request)
     {
         return view('frontend.extra-activities');
@@ -186,38 +187,61 @@ class AdminController extends Controller
 
     public function event(Request $request)
     {
-        return view('frontend.event');
-    }
-    
-    public function academicActivitiesSub(Request $request, $name)
-    {
-        $activities = Activity::where('category', $name)->orderBy('id', 'desc')->get();
-        $name = ucfirst($name);
-        return view('frontend.academic-activities-sub', compact('activities', 'name'));
+        $categories = Category::where('type', 'event')->orderBy('name')->get();
+        return $this->openFirstCategory($categories, 'events.category');
     }
 
-    public function eventSub(Request $request, $name)
+    public function categoryPage($type, $slug)
     {
-        $events = Event::where('category', $name)->orderBy('id', 'desc')->get();
-        $name = ucfirst(str_replace('_', ' ', $name)) . ' Day';
-        return view('frontend.event-sub', compact('events', 'name'));
+        $models = [
+            'achievement' => Achivement::class,
+            'activity' => Activity::class,
+            'event' => Event::class,
+        ];
+
+        abort_unless(isset($models[$type]), 404);
+        $category = Category::where('type', $type)->where('slug', $slug)->firstOrFail();
+        $model = $models[$type];
+        $items = $model::where(function ($query) use ($category) {
+            $query->where('category_id', $category->id)
+                ->orWhere('category', $category->slug);
+        })->where('is_show', 1)->latest()->get();
+        $categories = Category::where('type', $type)->orderBy('name')->get();
+
+        return view('frontend.category', compact('category', 'categories', 'items', 'type'));
     }
 
-    public function achievementsSub(Request $request, $name)
+    public function activityCategory($slug)
     {
-        $achivements = Achivement::where('category', $name)->orderBy('id', 'desc')->get();
-        $name = ucfirst($name);
-        return view('frontend.achievements-sub', compact('achivements', 'name'));
+        return $this->categoryPage('activity', $slug);
     }
-    
+
+    public function eventCategory($slug)
+    {
+        return $this->categoryPage('event', $slug);
+    }
+
+    public function achievementCategory($slug)
+    {
+        return $this->categoryPage('achievement', $slug);
+    }
+
     public function achievements(Request $request)
     {
-        return view('frontend.achievements');
+        $categories = Category::where('type', 'achievement')->orderBy('name')->get();
+        return $this->openFirstCategory($categories, 'achievements.category');
+    }
+
+    private function openFirstCategory($categories, $routeName)
+    {
+        abort_if($categories->isEmpty(), 404, 'No categories are available.');
+        return redirect()->route($routeName, $categories->first()->slug);
     }
 
     public function gallery(Request $request)
     {
-        return view('frontend.gallery');
+        $galleries = Galleryimage::where('is_show', 1)->latest()->paginate(12);
+        return view('frontend.photo-gallery', compact('galleries'));
     }
 
     public function videoGallery(Request $request)
@@ -226,7 +250,7 @@ class AdminController extends Controller
     }
     public function mediaGallery(Request $request)
     {
-        return view('frontend.news-gallery');
+        return view('frontend.media-gallery');
     }
 
     public function contact(Request $request)
@@ -236,34 +260,119 @@ class AdminController extends Controller
 
     public function storeContact(Request $request)
     {
-        $input = $request->all();
-        Contact::create($input);
-        return redirect()->back()->with('alert', 'Messange send Successfully');
+        $validated = $request->validate([
+            'username' => 'required|string|min:2|max:255',
+            'phone'    => 'required|regex:/^[0-9]{10}$/',
+            'email'    => 'required|email|max:255',
+            'subject'  => 'required|string|max:255',
+            'fdetail'  => 'required|string|min:5|max:2000',
+        ], [
+            'username.required' => 'Please enter your full name.',
+            'phone.required'    => 'Please enter your 10-digit mobile number.',
+            'phone.regex'       => 'Please enter a valid 10-digit mobile number.',
+            'email.required'    => 'Please enter your email address.',
+            'email.email'       => 'Please provide a valid email address.',
+            'subject.required'  => 'Please select a preferred campus.',
+            'fdetail.required'  => 'Please write your message or inquiry.',
+        ]);
+
+        $validated['is_show'] = 0;
+        Contact::create($validated);
+
+        if ($request->ajax() || $request->wantsJson() || $request->expectsJson()) {
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Thank you! Your message has been received. Our team will contact you shortly.'
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Thank you! Your message has been received. Our team will contact you shortly.');
     }
 
     public function storeInquiry(Request $request)
     {
-        $input = $request->all();
-        Enquirey::create($input);
-        return redirect()->back()->with('alert', 'Enqiry Message send Successfully');
+        $validated = $request->validate([
+            'fname'        => 'required|string|min:2|max:255',
+            'dob'          => 'required|date',
+            'cast'         => 'required|string|in:Boy,Girl',
+            'subject'      => 'required|string|max:255',
+            'media'        => 'required|string|max:255',
+            'source'       => 'nullable|string|max:255',
+            'taken_by'     => 'required|string|min:2|max:255',
+            'phone'        => 'required|regex:/^[0-9]{10}$/',
+            'email'        => 'required|email|max:255',
+            'bus_facility' => 'nullable|string|max:50',
+            'detail'       => 'required|string|min:5|max:2000',
+        ], [
+            'fname.required'        => "Please enter the child's full name.",
+            'dob.required'          => "Please enter the child's date of birth.",
+            'cast.required'         => "Please select the child's gender.",
+            'subject.required'      => 'Please select the grade applying for.',
+            'media.required'        => 'Please select the preferred campus.',
+            'taken_by.required'     => "Please enter the father's or guardian's name.",
+            'phone.required'        => 'Please enter a 10-digit mobile number.',
+            'phone.regex'           => 'Please enter a valid 10-digit mobile number.',
+            'email.required'        => 'Please enter a valid email address.',
+            'email.email'           => 'Please enter a valid email address.',
+            'detail.required'       => 'Please enter the residential address.',
+        ]);
+
+        $validated['is_show'] = 0;
+        Enquirey::create($validated);
+
+        if ($request->ajax() || $request->wantsJson() || $request->expectsJson()) {
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Thank you! Your admission inquiry has been submitted successfully. Our admissions counselor will contact you within 24 hours.'
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Thank you! Your admission inquiry has been submitted successfully. Our admissions counselor will contact you within 24 hours.');
     }
 
     public function storeCareer(Request $request)
     {
-        $input = $request->all();
-        if ($file = $request->file('file')) {
+        $validated = $request->validate([
+            'fname'   => 'required|string|min:2|max:255',
+            'phone'   => 'required|regex:/^[0-9]{10}$/',
+            'email'   => 'required|email|max:255',
+            'subject' => 'required|string|max:255',
+            'detail'  => 'nullable|string|max:2000',
+            'file'    => 'nullable|file|mimes:pdf,doc,docx|max:5120',
+        ], [
+            'fname.required'   => 'Please enter your full name.',
+            'phone.required'   => 'Please enter your 10-digit mobile number.',
+            'phone.regex'      => 'Please enter a valid 10-digit mobile number.',
+            'email.required'   => 'Please enter your email address.',
+            'email.email'      => 'Please enter a valid email address.',
+            'subject.required' => 'Please select the position you are applying for.',
+            'file.mimes'       => 'The resume must be a file of type: PDF, DOC, or DOCX.',
+            'file.max'         => 'The resume must not be larger than 5MB.',
+        ]);
 
+        if ($file = $request->file('file')) {
             $str = $file->getClientOriginalName();
             $str = str_replace(' ', '_', $str);
-
-            $name = time() . $str;
-
-            $file->move('careerimg', $name);
-
-            $input['file'] = "$name";
+            $filename = time() . '_' . $str;
+            $destination = public_path('careerimg');
+            if (!file_exists($destination)) {
+                mkdir($destination, 0755, true);
+            }
+            $file->move($destination, $filename);
+            $validated['file'] = $filename;
         }
-        Career::create($input);
-        return redirect()->back()->with('alert', 'Career Message send Successfully');
+
+        $validated['is_show'] = 0;
+        Career::create($validated);
+
+        if ($request->ajax() || $request->wantsJson() || $request->expectsJson()) {
+            return response()->json([
+                'status'  => 'success',
+                'message' => 'Thank you! Your job application has been submitted successfully. Our HR team will review your profile and contact you soon.'
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Thank you! Your job application has been submitted successfully. Our HR team will review your profile and contact you soon.');
     }
 
     /**
@@ -271,30 +380,18 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
-    {
+    public function index() {}
 
-    }
+    public function showEmployee(Request $request) {}
 
-    public function showEmployee(Request $request)
-    {
-
-    }
-
-    public function search(Request $request)
-    {
-
-    }
+    public function search(Request $request) {}
 
     /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-
-    }
+    public function create() {}
 
     /**
      * Store a newly created resource in storage.
@@ -302,10 +399,7 @@ class AdminController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
-
-    }
+    public function store(Request $request) {}
 
     /**
      * Display the specified resource.
@@ -324,10 +418,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-
-    }
+    public function edit($id) {}
 
     /**
      * Update the specified resource in storage.
@@ -336,10 +427,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
-    {
-
-    }
+    public function update(Request $request, $id) {}
 
     /**
      * Remove the specified resource from storage.
@@ -347,13 +435,7 @@ class AdminController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
-    {
+    public function destroy($id) {}
 
-    }
-
-    public function deleteAll(Request $request)
-    {
-
-    }
+    public function deleteAll(Request $request) {}
 }

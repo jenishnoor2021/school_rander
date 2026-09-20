@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Activity;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -13,10 +14,12 @@ class AdminActivitysController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $activitys = Activity::orderBy('id', 'DESC')->Paginate(10);
-        return view('admin.activity.index', compact('activitys'));
+        $categories = Category::where('type', 'activity')->orderBy('name')->get();
+        $selectedCategory = (int) $request->query('category');
+        return view('admin.activity.index', compact('activitys', 'categories', 'selectedCategory'));
     }
 
     /**
@@ -26,7 +29,7 @@ class AdminActivitysController extends Controller
      */
     public function create()
     {
-        return view('admin.activity.create');
+        return redirect()->route('admin.categories.index', 'activity');
     }
 
     /**
@@ -37,6 +40,9 @@ class AdminActivitysController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(['category_id' => 'required|exists:categories,id', 'text' => 'required|string|max:255', 'file' => 'required|image']);
+        $category = Category::where('type', 'activity')->findOrFail($request->category_id);
+        $namef = null;
         if ($file = $request->file('file')) {
 
             $str = $file->getClientOriginalName();
@@ -45,18 +51,18 @@ class AdminActivitysController extends Controller
             $namef = time() . $str;
 
             $file->move('activity', $namef);
-
         }
 
         $activity = new Activity([
-            "category" => $request->category,
+            "category_id" => $category->id,
+            "category" => $category->slug,
             "text" => $request->text,
             "file" => $namef,
             "is_show" => 1,
         ]);
         $activity->save();
 
-        return redirect('/admin/activitycategory');
+        return redirect()->route('admin.categories.index', ['type' => 'activity', 'category' => $category->id]);
     }
 
     /**
@@ -76,10 +82,12 @@ class AdminActivitysController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $activity = Activity::findOrFail($id);
-        return view('admin.activity.edit',compact('activity'));
+        $categories = Category::where('type', 'activity')->orderBy('name')->get();
+        $backUrl = $this->backUrl($request->query('return_url'), $activity->category_id);
+        return view('admin.activity.edit', compact('activity', 'categories', 'backUrl'));
     }
 
     /**
@@ -92,29 +100,42 @@ class AdminActivitysController extends Controller
     public function update(Request $request, $id)
     {
         $push = Activity::findOrFail($id);
+        $request->validate(['category_id' => 'required|exists:categories,id', 'text' => 'required|string|max:255']);
+        $category = Category::where('type', 'activity')->findOrFail($request->category_id);
 
-        $input = $request->all();
+        $input = $request->except(['_token', '_method', 'file', 'return_url']);
+        $input['category_id'] = $category->id;
+        $input['category'] = $category->slug;
 
-        if($file = $request->file('file')){
+        if ($file = $request->file('file')) {
 
             $str = $file->getClientOriginalName();
-                $str = str_replace(' ', '_', $str);
+            $str = str_replace(' ', '_', $str);
 
-                $name = time() . $str;
+            $name = time() . $str;
 
             $file->move('activity', $name);
 
             $input['file'] = "$name";
 
-            if(file_exists(public_path() . $push->file)) // make sure it exits inside the folder
+            if (file_exists(public_path() . $push->file)) // make sure it exits inside the folder
             {
-              unlink(public_path() . $push->file);
+                unlink(public_path() . $push->file);
             }
-
         }
         $push->update($input);
 
-        return redirect('admin/activitycategory');
+        return redirect()->to($this->backUrl($request->input('return_url'), $category->id));
+    }
+
+    private function backUrl($url, $categoryId)
+    {
+        $path = $url ? parse_url($url, PHP_URL_PATH) : null;
+        if ($url && parse_url($url, PHP_URL_HOST) === request()->getHost() && is_string($path) && strpos($path, '/admin/') === 0) {
+            return $url;
+        }
+
+        return route('admin.categories.index', ['type' => 'activity', 'category' => $categoryId]);
     }
 
     /**
@@ -128,13 +149,11 @@ class AdminActivitysController extends Controller
         $activity = Activity::findOrFail($id);
 
         if ($activity->file == '/activity/') {
-
         } else {
 
             if (file_exists(public_path() . $activity->file)) {
                 unlink(public_path() . $activity->file);
             }
-
         }
         $activity->delete();
 

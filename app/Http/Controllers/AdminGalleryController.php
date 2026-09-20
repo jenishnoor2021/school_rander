@@ -40,25 +40,30 @@ class AdminGalleryController extends Controller
      */
     public function store(Request $request)
     {
+        if ($request->hasFile('file')) {
+            $files = is_array($request->file('file')) ? $request->file('file') : [$request->file('file')];
+            foreach ($files as $file) {
+                if ($file && $file->isValid()) {
+                    $original = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                    $extension = $file->getClientOriginalExtension();
+                    $cleanName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $original);
+                    $name = time() . '_' . uniqid() . '_' . $cleanName . '.' . $extension;
 
-            $input = $request->all();
-            
-            if ($request->hasFile('file')) {
-                foreach ($request->file('file') as $file) {
-                    $str = $file->getClientOriginalName();
-                    $str = str_replace(' ', '_', $str);
-    
-                    $name = time() . $str;
-    
-                    $file->move('galleryimg', $name);
-    
-                    $input['file'] = "$name";
-                    Galleryimage::create(['file' => $name]);
+                    $file->move(public_path('galleryimg'), $name);
+
+                    Galleryimage::create([
+                        'file' => $name,
+                        'text' => $request->text,
+                        'is_show' => 1
+                    ]);
                 }
             }
-        
-            Session::flash('message', "Image Save Successfully");
-            return redirect('admin/galleryimage');
+            Session::flash('message', "Image(s) Saved Successfully");
+        } else {
+            Session::flash('error', "Please select an image to upload");
+        }
+
+        return redirect('admin/galleryimage');
     }
 
     /**
@@ -81,7 +86,7 @@ class AdminGalleryController extends Controller
     public function edit($id)
     {
         $gallery = Galleryimage::findOrFail($id);
-        return view('admin.galleryimages.edit',compact('gallery'));
+        return view('admin.galleryimages.edit', compact('gallery'));
     }
 
     /**
@@ -95,29 +100,30 @@ class AdminGalleryController extends Controller
     {
         $push = Galleryimage::findOrFail($id);
 
-        $input = $request->all();
+        $input = [
+            'text' => $request->text,
+        ];
 
-        if($file = $request->file('file')){
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            if ($file->isValid()) {
+                $original = pathinfo($file->getClientOriginalName(), PATHINFO_FILENAME);
+                $extension = $file->getClientOriginalExtension();
+                $cleanName = preg_replace('/[^A-Za-z0-9_\-]/', '_', $original);
+                $name = time() . '_' . uniqid() . '_' . $cleanName . '.' . $extension;
 
-            $str = $file->getClientOriginalName();
-                $str = str_replace(' ', '_', $str);
+                $file->move(public_path('galleryimg'), $name);
 
-                $name = time() . $str;
+                $input['file'] = $name;
 
-            $file->move('galleryimg', $name);
-
-            $input['file'] = "$name";
-
-            if(file_exists(public_path() . $push->file)) // make sure it exits inside the folder
-            {
-              unlink(public_path() . $push->file);
+                if (!empty($push->file) && $push->file != '/galleryimg/' && file_exists(public_path($push->file))) {
+                    @unlink(public_path($push->file));
+                }
             }
-
-            // unlink(public_path() . $push->file);
         }
-        //  return $input;
+
         $push->update($input);
-        // return Redirect::back();
+        Session::flash('message', "Image Updated Successfully");
         return redirect('admin/galleryimage');
     }
 
@@ -130,36 +136,31 @@ class AdminGalleryController extends Controller
     public function destroy($id)
     {
         $push = Galleryimage::findOrFail($id);
-        if($push->file == '/galleryimg/'){
-            $push->delete();
-        }else{
-
-            if(file_exists(public_path() . $push->file)) // make sure it exits inside the folder
-            {
-              unlink(public_path() . $push->file);
-            }
-
-            // unlink(public_path() . $push->file);
-            $push->delete();
+        if (!empty($push->file) && $push->file != '/galleryimg/' && file_exists(public_path($push->file))) {
+            @unlink(public_path($push->file));
         }
-       
-        return  Redirect::back(); 
-    }
+        $push->delete();
 
+        Session::flash('message', "Image Deleted Successfully");
+        return Redirect::back(); 
+    }
 
     public function deleteGalleryAll(Request $request)
     {
         $ids = $request->ids;
-        $single_id = explode(",",$ids);
-       foreach($single_id as $id){
-        $i = Galleryimage::findOrFail($id);
-        if($i->file == '/galleryimg/'){
-        }else{
-            unlink(public_path() . $i->file);
+        $single_id = explode(",", $ids);
+        foreach ($single_id as $id) {
+            if (!empty($id)) {
+                $i = Galleryimage::find($id);
+                if ($i) {
+                    if (!empty($i->file) && $i->file != '/galleryimg/' && file_exists(public_path($i->file))) {
+                        @unlink(public_path($i->file));
+                    }
+                    $i->delete();
+                }
+            }
         }
-        $i->delete();
-       }
-        return response()->json(['success'=>"Deleted successfully."]);
+        return response()->json(['success' => "Deleted successfully."]);
     }
 
     public function galleryActive($id)

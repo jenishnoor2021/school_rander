@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Event;
+use App\Models\Category;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Redirect;
 
@@ -13,10 +14,12 @@ class AdminEventsController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         $events = Event::orderBy('id', 'DESC')->Paginate(10);
-        return view('admin.event.index', compact('events'));
+        $categories = Category::where('type', 'event')->orderBy('name')->get();
+        $selectedCategory = (int) $request->query('category');
+        return view('admin.event.index', compact('events', 'categories', 'selectedCategory'));
     }
 
     /**
@@ -26,7 +29,7 @@ class AdminEventsController extends Controller
      */
     public function create()
     {
-        return view('admin.event.create');
+        return redirect()->route('admin.categories.index', 'event');
     }
 
     /**
@@ -37,6 +40,9 @@ class AdminEventsController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate(['category_id' => 'required|exists:categories,id', 'text' => 'required|string|max:255', 'file' => 'required|image']);
+        $category = Category::where('type', 'event')->findOrFail($request->category_id);
+        $namef = null;
         if ($file = $request->file('file')) {
 
             $str = $file->getClientOriginalName();
@@ -45,18 +51,18 @@ class AdminEventsController extends Controller
             $namef = time() . $str;
 
             $file->move('event', $namef);
-
         }
 
         $product = new Event([
-            "category" => $request->category,
+            "category_id" => $category->id,
+            "category" => $category->slug,
             "text" => $request->text,
             "file" => $namef,
             "is_show" => 1,
         ]);
         $product->save();
 
-        return redirect('/admin/event');
+        return redirect()->route('admin.categories.index', ['type' => 'event', 'category' => $category->id]);
     }
 
     /**
@@ -76,10 +82,12 @@ class AdminEventsController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request, $id)
     {
         $event = Event::findOrFail($id);
-        return view('admin.event.edit',compact('event'));
+        $categories = Category::where('type', 'event')->orderBy('name')->get();
+        $backUrl = $this->backUrl($request->query('return_url'), $event->category_id);
+        return view('admin.event.edit', compact('event', 'categories', 'backUrl'));
     }
 
     /**
@@ -92,29 +100,42 @@ class AdminEventsController extends Controller
     public function update(Request $request, $id)
     {
         $push = Event::findOrFail($id);
+        $request->validate(['category_id' => 'required|exists:categories,id', 'text' => 'required|string|max:255']);
+        $category = Category::where('type', 'event')->findOrFail($request->category_id);
 
-        $input = $request->all();
+        $input = $request->except(['_token', '_method', 'file', 'return_url']);
+        $input['category_id'] = $category->id;
+        $input['category'] = $category->slug;
 
-        if($file = $request->file('file')){
+        if ($file = $request->file('file')) {
 
             $str = $file->getClientOriginalName();
-                $str = str_replace(' ', '_', $str);
+            $str = str_replace(' ', '_', $str);
 
-                $name = time() . $str;
+            $name = time() . $str;
 
             $file->move('event', $name);
 
             $input['file'] = "$name";
 
-            if(file_exists(public_path() . $push->file)) // make sure it exits inside the folder
+            if (file_exists(public_path() . $push->file)) // make sure it exits inside the folder
             {
-              unlink(public_path() . $push->file);
+                unlink(public_path() . $push->file);
             }
-
         }
         $push->update($input);
 
-        return redirect('admin/event');
+        return redirect()->to($this->backUrl($request->input('return_url'), $category->id));
+    }
+
+    private function backUrl($url, $categoryId)
+    {
+        $path = $url ? parse_url($url, PHP_URL_PATH) : null;
+        if ($url && parse_url($url, PHP_URL_HOST) === request()->getHost() && is_string($path) && strpos($path, '/admin/') === 0) {
+            return $url;
+        }
+
+        return route('admin.categories.index', ['type' => 'event', 'category' => $categoryId]);
     }
 
     /**
@@ -128,14 +149,12 @@ class AdminEventsController extends Controller
         $event = Event::findOrFail($id);
 
         if ($event->file == '/event/') {
-
         } else {
 
             if (file_exists(public_path() . $event->file)) // make sure it exits inside the folder
             {
                 unlink(public_path() . $event->file);
             }
-
         }
         $event->delete();
 

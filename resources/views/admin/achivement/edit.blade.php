@@ -19,6 +19,7 @@
             <div class="box box-primary">
                <div class="box-header">
                   <h3 class="box-title">Edit Achivement</h3>
+                  <a href="{{ $backUrl }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-arrow-left"></i> Back to items</a>
                </div>
                <div class="box-body">
                   <!-- Horizontal Form -->
@@ -30,14 +31,14 @@
                      <!-- form start -->
                      {!! Form::model($achivement, ['method'=>'PATCH', 'action'=> ['AdminAchivementController@update', $achivement->id],'files'=>true,'class'=>'form-horizontal','name'=>'editachivementform']) !!}
                      @csrf
+                     <input type="hidden" name="return_url" value="{{ $backUrl }}">
                      <div class="box-body">
                         <div class="form-group">
                            <label for="category" class="col-sm-2 control-label">Category</label>
                            <div class="col-sm-10">
-                              <select name="category" id="category" class="custom-select" style="width:100%" required>
+                              <select name="category_id" id="category" class="custom-select" style="width:100%" required>
                                  <option value="">Select Category</option>
-                                 <option value="student" {{ $achivement->category == 'student' ? 'selected' : '' }}>Student</option>
-                                 <option value="principal" {{ $achivement->category == 'principal' ? 'selected' : '' }}>Principal</option>
+                                 @foreach($categories as $category)<option value="{{ $category->id }}" {{ $achivement->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>@endforeach
                               </select>
                               @if($errors->has('category'))
                               <div class="error text-danger">{{ $errors->first('category') }}</div>
@@ -54,8 +55,8 @@
                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="text" class="col-sm-2 control-label"></label>
-                        <img height="100px" src="{{$achivement->file ? $achivement->file : 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png'}}" alt="" >
+                           <label for="text" class="col-sm-2 control-label"></label>
+                           <img height="100px" src="{{$achivement->file ? $achivement->file : 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png'}}" alt="">
                         </div>
                         <div class="form-group">
                            <label for="file" class="col-sm-2 control-label">Image</label>
@@ -67,8 +68,8 @@
                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="text" class="col-sm-2 control-label"></label>
-                        <img id="blah_achi" src="#" alt="your image" style="display:none;max-height: 200px;width:250px" />
+                           <label for="text" class="col-sm-2 control-label"></label>
+                           <img id="blah_achi" src="#" alt="your image" style="display:none;max-height: 200px;width:250px" />
                         </div>
                         <div class="form-group">
                            <div class="col-md-6 col-sm-2 control-label">
@@ -94,31 +95,30 @@
 
 @section('script')
 <script>
-        $(function() {
+   $(function() {
 
-         $("form[name='editachivementform']").validate({
-                rules: {
-                  category:{
-                     required: true,
-                  },
-                  text:{
-                     required: true,
-                  },
-                },
-                submitHandler: function(form) {
-                    form.submit();
-                }
-            });
+      $("form[name='editachivementform']").validate({
+         rules: {
+            category: {
+               required: true,
+            },
+            text: {
+               required: true,
+            },
+         },
+         submitHandler: function(form) {
+            form.submit();
+         }
       });
+   });
 
-      $("#file").change(function () {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-            $("#blah_achi").attr("src", e.target.result);
-        };
-        reader.readAsDataURL(this.files[0]);
-        $("#blah_achi").css("display", "block");
-    });
-
+   $("#file").change(function() {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+         $("#blah_achi").attr("src", e.target.result);
+      };
+      reader.readAsDataURL(this.files[0]);
+      $("#blah_achi").css("display", "block");
+   });
 </script>
 @endsection

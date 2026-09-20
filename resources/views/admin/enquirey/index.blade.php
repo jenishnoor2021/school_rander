@@ -26,16 +26,16 @@
                      <thead class="bg-primary">
                         <tr>
                            <th>Action</th>
-                           <th>First name</th>
+                           <th>Child Name</th>
                            <th>Date Of Birth</th>
                            <th>Email</th>
-                           <th>Phone no</th>
-                           <th>Admission in Class</th>
-                           <th>Name of previous school</th>
-                           <th>Medium</th>
-                           <th>Cast</th>
-                           <th>Source of inquiry</th>
-                           <th>Inq. take by</th>
+                           <th>Phone No</th>
+                           <th>Grade / Class</th>
+                           <th>Residential Address</th>
+                           <th>Preferred Campus</th>
+                           <th>Gender</th>
+                           <th>Preferred Shift</th>
+                           <th>Father / Guardian</th>
                            <th>Date</th>
                         </tr>
                      </thead>

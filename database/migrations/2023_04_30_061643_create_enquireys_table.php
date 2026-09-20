@@ -23,6 +23,7 @@ class CreateEnquireysTable extends Migration
             $table->string('subject')->nullable();
             $table->string('media')->nullable();
             $table->text('detail')->nullable();
+            $table->string('bus_facility', 50)->nullable();
             $table->string('cast')->nullable();
             $table->string('source')->nullable();
             $table->string('taken_by')->nullable();

@@ -18,6 +18,8 @@ class CreateCareersTable extends Migration
             $table->string('fname');
             $table->string('email');
             $table->string('phone')->nullable();
+            $table->string('subject')->nullable();
+            $table->text('detail')->nullable();
             $table->string('file')->nullable();
             $table->boolean('is_show')->default(0);
             $table->timestamps();

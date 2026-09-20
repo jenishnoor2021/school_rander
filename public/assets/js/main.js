@@ -13,6 +13,7 @@ document.addEventListener('DOMContentLoaded', () => {
   initStatsCounters();
   initHeroParallax();
   initFormFeedback();
+  initHomePopupModal();
 });
 
 /* --------------------------------------------------------------------------
@@ -305,28 +306,322 @@ function initHeroParallax() {
 }
 
 /* --------------------------------------------------------------------------
-   9. Form Feedback Interactivity
+   9. Form Submission Engine (Client Validation, Button Loader & AJAX Feedback)
    -------------------------------------------------------------------------- */
 function initFormFeedback() {
   const forms = document.querySelectorAll('.interactive-form');
-  forms.forEach(form => {
-    form.addEventListener('submit', (e) => {
-      e.preventDefault();
-      const submitBtn = form.querySelector('button[type="submit"]');
-      if (submitBtn) {
-        const originalText = submitBtn.innerHTML;
-        submitBtn.disabled = true;
-        submitBtn.innerHTML = `<i class="fas fa-check-circle"></i> Submitted Successfully!`;
-        submitBtn.style.background = 'var(--mint-gradient)';
+  if (!forms.length) return;
 
-        setTimeout(() => {
-          alert('Thank you! Your information has been received. Our Seven Steps admissions counselor will contact you shortly.');
+  forms.forEach(form => {
+    // Clear field-specific validation errors dynamically on user input
+    form.querySelectorAll('input, select, textarea').forEach(input => {
+      input.addEventListener('input', () => clearFieldError(input));
+      input.addEventListener('change', () => clearFieldError(input));
+    });
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      // Clear all existing alerts and field errors
+      clearAllFormErrors(form);
+
+      // 1. Perform Client-Side Validation
+      const isValid = validateForm(form);
+      if (!isValid) {
+        showFormAlert(form, 'error', 'Please check the required fields highlighted in red below.');
+        return;
+      }
+
+      // 2. Put Button into Loading State
+      const submitBtn = form.querySelector('button[type="submit"]');
+      let originalBtnHtml = '';
+      if (submitBtn) {
+        originalBtnHtml = submitBtn.innerHTML;
+        submitBtn.disabled = true;
+        submitBtn.classList.add('btn-loading');
+        submitBtn.innerHTML = '<span class="btn-spinner"><i class="fas fa-spinner fa-spin"></i></span><span class="btn-text">Submitting... Please wait</span>';
+      }
+
+      // 3. Submit Form Data via AJAX (Fetch API)
+      const formData = new FormData(form);
+      const actionUrl = form.getAttribute('action') || window.location.href;
+      const csrfToken = document.querySelector('meta[name="csrf-token"]')?.getAttribute('content') 
+                        || form.querySelector('input[name="_token"]')?.value 
+                        || '';
+
+      try {
+        const response = await fetch(actionUrl, {
+          method: 'POST',
+          body: formData,
+          headers: {
+            'Accept': 'application/json',
+            'X-Requested-With': 'XMLHttpRequest',
+            'X-CSRF-TOKEN': csrfToken
+          }
+        });
+
+        const data = await response.json().catch(() => null);
+
+        if (response.ok && data && (data.status === 'success' || data.success)) {
+          // Success Feedback
+          showFormAlert(form, 'success', data.message || 'Your information has been saved successfully!');
           form.reset();
+        } else if (response.status === 422 && data && data.errors) {
+          // Backend Validation Errors (HTTP 422)
+          handleServerValidationErrors(form, data.errors);
+          const errorMsg = data.message || 'Please correct the highlighted fields and submit again.';
+          showFormAlert(form, 'error', errorMsg);
+        } else {
+          // Generic Failure
+          const errorMsg = (data && data.message) 
+            ? data.message 
+            : 'We were unable to save your information. Please check your internet connection or call our office.';
+          showFormAlert(form, 'error', errorMsg);
+        }
+      } catch (err) {
+        console.error('Submission failed:', err);
+        showFormAlert(form, 'error', 'Network error encountered while submitting. Please check your connection or contact our office directly.');
+      } finally {
+        // Restore Submit Button State
+        if (submitBtn) {
           submitBtn.disabled = false;
-          submitBtn.innerHTML = originalText;
-          submitBtn.style.background = '';
-        }, 600);
+          submitBtn.classList.remove('btn-loading');
+          submitBtn.innerHTML = originalBtnHtml;
+        }
       }
     });
   });
 }
+
+/**
+ * Client-Side Form Validation Rules
+ */
+function validateForm(form) {
+  let hasErrors = false;
+  let firstInvalidInput = null;
+
+  const markInvalid = (input, message) => {
+    hasErrors = true;
+    input.classList.add('is-invalid');
+
+    // Check if error message already exists
+    let parent = input.closest('.form-field-group');
+    if (parent && !parent.querySelector('.form-field-error')) {
+      const errorDiv = document.createElement('div');
+      errorDiv.className = 'form-field-error';
+      errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> <span>${message}</span>`;
+      parent.appendChild(errorDiv);
+    }
+
+    if (!firstInvalidInput) {
+      firstInvalidInput = input;
+    }
+  };
+
+  // Validate Name fields
+  const nameFields = form.querySelectorAll('input[name="fname"], input[name="username"], input[name="taken_by"]');
+  nameFields.forEach(input => {
+    const val = input.value.trim();
+    if (input.hasAttribute('required') && !val) {
+      markInvalid(input, 'Please enter full name.');
+    } else if (val && val.length < 2) {
+      markInvalid(input, 'Name must be at least 2 characters long.');
+    }
+  });
+
+  // Validate Phone fields
+  const phoneFields = form.querySelectorAll('input[name="phone"]');
+  phoneFields.forEach(input => {
+    const val = input.value.trim().replace(/\D/g, '');
+    if (input.hasAttribute('required') && !val) {
+      markInvalid(input, 'Please enter a 10-digit mobile number.');
+    } else if (val && !/^[0-9]{10}$/.test(val)) {
+      markInvalid(input, 'Please enter a valid 10-digit mobile number (numbers only).');
+    }
+  });
+
+  // Validate Email fields
+  const emailFields = form.querySelectorAll('input[type="email"], input[name="email"]');
+  emailFields.forEach(input => {
+    const val = input.value.trim();
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (input.hasAttribute('required') && !val) {
+      markInvalid(input, 'Please enter a valid email address.');
+    } else if (val && !emailRegex.test(val)) {
+      markInvalid(input, 'Please enter a valid email format (e.g. name@example.com).');
+    }
+  });
+
+  // Validate Date of Birth
+  const dobFields = form.querySelectorAll('input[name="dob"]');
+  dobFields.forEach(input => {
+    if (input.hasAttribute('required') && !input.value.trim()) {
+      markInvalid(input, 'Please select the date of birth.');
+    }
+  });
+
+  // Validate Select Dropdowns
+  const selectFields = form.querySelectorAll('select[required]');
+  selectFields.forEach(select => {
+    if (!select.value || select.value === '') {
+      markInvalid(select, 'Please select an option.');
+    }
+  });
+
+  // Validate Textarea details
+  const textareas = form.querySelectorAll('textarea[required]');
+  textareas.forEach(textarea => {
+    const val = textarea.value.trim();
+    if (!val) {
+      markInvalid(textarea, 'Please fill in this required field.');
+    } else if (val.length < 5) {
+      markInvalid(textarea, 'Please provide more details (minimum 5 characters).');
+    }
+  });
+
+  // Validate File uploads (if any selected)
+  const fileInputs = form.querySelectorAll('input[type="file"]');
+  fileInputs.forEach(fileInput => {
+    if (fileInput.files && fileInput.files[0]) {
+      const file = fileInput.files[0];
+      const allowedExt = ['pdf', 'doc', 'docx'];
+      const fileExt = file.name.split('.').pop().toLowerCase();
+      const maxSize = 5 * 1024 * 1024; // 5MB
+
+      if (!allowedExt.includes(fileExt)) {
+        markInvalid(fileInput, 'Allowed file formats are .pdf, .doc, and .docx only.');
+      } else if (file.size > maxSize) {
+        markInvalid(fileInput, 'File size must not exceed 5MB.');
+      }
+    }
+  });
+
+  if (firstInvalidInput) {
+    firstInvalidInput.focus();
+    firstInvalidInput.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
+  return !hasErrors;
+}
+
+/**
+ * Clear errors on specific field
+ */
+function clearFieldError(input) {
+  input.classList.remove('is-invalid');
+  const parent = input.closest('.form-field-group');
+  if (parent) {
+    const errorDiv = parent.querySelector('.form-field-error');
+    if (errorDiv) errorDiv.remove();
+  }
+}
+
+/**
+ * Clear all errors across the form
+ */
+function clearAllFormErrors(form) {
+  form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+  form.querySelectorAll('.form-field-error').forEach(el => el.remove());
+  const alertBox = form.closest('.workbook-form-card')?.querySelector('.form-alert-box') 
+                   || form.querySelector('.form-alert-box');
+  if (alertBox) {
+    alertBox.innerHTML = '';
+  }
+}
+
+/**
+ * Handle Backend Validation Errors (HTTP 422)
+ */
+function handleServerValidationErrors(form, errors) {
+  let firstEl = null;
+
+  for (const [field, messages] of Object.entries(errors)) {
+    const input = form.querySelector(`[name="${field}"]`);
+    if (input) {
+      input.classList.add('is-invalid');
+      const parent = input.closest('.form-field-group');
+      if (parent && !parent.querySelector('.form-field-error')) {
+        const errorDiv = document.createElement('div');
+        errorDiv.className = 'form-field-error';
+        errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> <span>${messages[0]}</span>`;
+        parent.appendChild(errorDiv);
+      }
+      if (!firstEl) firstEl = input;
+    }
+  }
+
+  if (firstEl) {
+    firstEl.focus();
+    firstEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+}
+
+/**
+ * Display Floating Form Alert (Success / Error)
+ */
+function showFormAlert(form, type, message) {
+  const alertBox = form.closest('.workbook-form-card')?.querySelector('.form-alert-box') 
+                   || form.querySelector('.form-alert-box');
+  if (!alertBox) {
+    alert(message);
+    return;
+  }
+
+  const isSuccess = type === 'success';
+  const alertClass = isSuccess ? 'form-alert-success' : 'form-alert-error';
+  const iconClass = isSuccess ? 'fa-check-circle' : 'fa-exclamation-circle';
+  const title = isSuccess ? 'Success!' : 'Notice';
+
+  alertBox.innerHTML = `
+    <div class="form-alert ${alertClass}">
+      <i class="fas ${iconClass} alert-icon"></i>
+      <div class="form-alert-content">
+        <div class="form-alert-title">${title}</div>
+        <div>${message}</div>
+      </div>
+      <button type="button" class="form-alert-close" aria-label="Close" onclick="this.parentElement.remove();">&times;</button>
+    </div>
+  `;
+
+  alertBox.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+/* --------------------------------------------------------------------------
+   10. Homepage Announcement Popup Modal Controller
+   -------------------------------------------------------------------------- */
+function initHomePopupModal() {
+  const modal = document.getElementById('homeAnnouncementModal');
+  if (!modal) return;
+
+  const openModal = () => {
+    modal.classList.add('show');
+    document.body.style.overflow = 'hidden';
+  };
+
+  const closeModal = () => {
+    modal.classList.remove('show');
+    document.body.style.overflow = '';
+  };
+
+  // Open modal smoothly when page loads
+  setTimeout(openModal, 600);
+
+  const closeBtn = document.getElementById('closePopupBtn');
+  const dismissBtn = document.getElementById('dismissPopupText');
+  if (closeBtn) closeBtn.addEventListener('click', closeModal);
+  if (dismissBtn) dismissBtn.addEventListener('click', closeModal);
+
+  // Close when clicking outside on dark backdrop
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) closeModal();
+  });
+
+  // Close on Escape key
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && modal.classList.contains('show')) {
+      closeModal();
+    }
+  });
+}
+
+

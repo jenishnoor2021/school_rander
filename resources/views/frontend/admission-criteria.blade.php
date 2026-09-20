@@ -61,7 +61,7 @@
    </div>
 
    <div class="who-we-are-shape">
-      <img src="{{asset('assets/img/boy4.png')}}" alt="boy4">
+      <img src="{{ asset('assets/img/hero_child.png') }}" alt="Students at Seven Steps Pre-School">
    </div>
 </section>
 <!-- End Who We Are Area -->

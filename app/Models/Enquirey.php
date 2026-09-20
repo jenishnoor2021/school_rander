@@ -18,9 +18,12 @@ class Enquirey extends Model
         parent::boot();
   
         static::created(function ($item) {
-                
-            $adminEmail = "sspreschool77@gmail.com";
-            Mail::to($adminEmail)->send(new EnquiryMail($item));
+            try {
+                $adminEmail = "sspreschool77@gmail.com";
+                Mail::to($adminEmail)->send(new EnquiryMail($item));
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::error('Enquiry notification mail failed: ' . $e->getMessage());
+            }
         });
     }
     

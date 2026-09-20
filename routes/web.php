@@ -17,6 +17,7 @@ use App\Http\Controllers\AdminVideosController;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AdminPopupsController;
+use App\Http\Controllers\AdminCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -43,6 +44,8 @@ Route::get('/', [AdminController::class, 'homePage']);
 
 Route::get('site/about', [AdminController::class, 'aboutUs'])->name('aboutUs');
 Route::get('site/managing_director', [AdminController::class, 'management'])->name('managing_director');
+Route::view('site/coordinator', 'frontend.coordinator')->name('coordinator');
+Route::view('site/academic-head-message', 'frontend.academic-head-message')->name('academic-head-message');
 Route::get('site/principal-message', [AdminController::class, 'principleMessage'])->name('principal-message');
 Route::get('site/branch-head', [AdminController::class, 'branchHead'])->name('branch-head');
 Route::get('site/incharge-message', [AdminController::class, 'inchargeMessage'])->name('incharge-message');
@@ -58,18 +61,20 @@ Route::get('site/career', [AdminController::class, 'career'])->name('career');
 
 Route::get('site/academic_activities', [AdminController::class, 'academicActivities'])->name('academic_activities');
 Route::get('site/extra_activities', [AdminController::class, 'extraActivities'])->name('extra_activities');
-Route::get('site/academic_activities/{name}', [AdminController::class, 'academicActivitiesSub'])->name('academic_activities_sub');
+Route::get('site/activities/{slug}', [AdminController::class, 'activityCategory'])->name('activities.category');
 
 Route::get('site/event', [AdminController::class, 'event'])->name('event');
 Route::get('site/achievements', [AdminController::class, 'achievements'])->name('achievements');
-Route::get('site/event/{name}', [AdminController::class, 'eventSub'])->name('event_sub');
-Route::get('site/achievements/{name}', [AdminController::class, 'achievementsSub'])->name('achievements_sub');
+Route::get('site/events/{slug}', [AdminController::class, 'eventCategory'])->name('events.category');
+Route::get('site/achievements/{slug}', [AdminController::class, 'achievementCategory'])->name('achievements.category');
 
 Route::get('site/gallery', [AdminController::class, 'gallery'])->name('gallery');
 Route::get('site/video-gallery', [AdminController::class, 'videoGallery'])->name('video-gallery');
 Route::get('site/media-gallery', [AdminController::class, 'mediaGallery'])->name('media-gallery');
 
 Route::get('site/contact', [AdminController::class, 'contact'])->name('contact');
+
+Route::view('site/admission', 'frontend.admission')->name('admission');
 
 Route::post('/contactstore', [AdminController::class, 'storeContact'])->name('storeContact');
 Route::post('/inquireystore', [AdminController::class, 'storeInquiry'])->name('storeInquiry');
@@ -120,7 +125,7 @@ Route::group(['middleware' => ['auth', 'usersession']], function () {
     Route::patch('admin/videos/update/{id}', [AdminVideosController::class, 'update'])->name('admin.videos.update');
     Route::get('admin/videos/destroy/{id}', [AdminVideosController::class, 'destroy'])->name('admin.videos.destroy');
     Route::delete('/myvideosDeleteAll', [AdminVideosController::class, 'deleteVideosAll'])->name('deletevideosAll');
-    Route::get("admin/video/active/{id}", [AdminVideosController::class, 'videoActive'])->name('admin.gallery.active');
+    Route::get("admin/video/active/{id}", [AdminVideosController::class, 'videoActive'])->name('admin.video.active');
 
     Route::get("admin/mediagalleryimage", [AdminMediaGalleryController::class, 'index'])->name('admin.mediagalleryimage.index');
     Route::get('admin/mediagalleryimage/create', [AdminMediaGalleryController::class, 'create'])->name('admin.mediagalleryimage.create');
@@ -172,7 +177,7 @@ Route::group(['middleware' => ['auth', 'usersession']], function () {
     Route::get('admin/career/edit/{id}', [AdminCareersController::class, 'edit'])->name('admin.career.edit');
     Route::patch('admin/career/update/{id}', [AdminCareersController::class, 'update'])->name('admin.career.update');
     Route::get('admin/career/destroy/{id}', [AdminCareersController::class, 'destroy'])->name('admin.career.destroy');
-    
+
     Route::get("admin/achivement", [AdminAchivementController::class, 'index'])->name('admin.achivement.index');
     Route::get('admin/achivement/create', [AdminAchivementController::class, 'create'])->name('admin.achivement.create');
     Route::post('admin/achivement/store', [AdminAchivementController::class, 'store'])->name('admin.achivement.store');
@@ -196,7 +201,7 @@ Route::group(['middleware' => ['auth', 'usersession']], function () {
     Route::patch('admin/event/update/{id}', [AdminEventsController::class, 'update'])->name('admin.event.update');
     Route::get('admin/event/destroy/{id}', [AdminEventsController::class, 'destroy'])->name('admin.event.destroy');
     Route::delete('/myeventDeleteAll', [AdminEventsController::class, 'deleteEventAll'])->name('deleteeventAll');
-    
+
     Route::get("admin/popup", [AdminPopupsController::class, 'index'])->name('admin.popup.index');
     Route::post('admin/popup/store', [AdminPopupsController::class, 'store'])->name('admin.popup.store');
     Route::get('admin/popup/edit/{id}', [AdminPopupsController::class, 'edit'])->name('admin.popup.edit');
@@ -204,6 +209,10 @@ Route::group(['middleware' => ['auth', 'usersession']], function () {
     Route::get('admin/popup/destroy/{id}', [AdminPopupsController::class, 'destroy'])->name('admin.popup.destroy');
     Route::get("admin/popup/active/{id}", [AdminPopupsController::class, 'popupActive'])->name('admin.popup.active');
 
+    Route::get('admin/{type}/categories', [AdminCategoryController::class, 'index'])->name('admin.categories.index');
+    Route::post('admin/{type}/categories', [AdminCategoryController::class, 'store'])->name('admin.categories.store');
+    Route::patch('admin/{type}/categories/{category}', [AdminCategoryController::class, 'update'])->name('admin.categories.update');
+    Route::delete('admin/{type}/categories/{category}', [AdminCategoryController::class, 'destroy'])->name('admin.categories.destroy');
 });
 
 //Clear Cache facade value:

@@ -34,11 +34,9 @@
                         <div class="form-group">
                            <label for="category" class="col-sm-2 control-label">Category</label>
                            <div class="col-sm-10">
-                              <select name="category" id="category" class="custom-select" style="width:100%" required>
+                              <select name="category_id" id="category" class="custom-select" style="width:100%" required>
                                  <option value="">Select Category</option>
-                                 <option value="celebration">Celebration</option>
-                                 <option value="competition">Competition</option>
-                                 <option value="club">Club</option>
+                                 @foreach($categories as $category)<option value="{{ $category->id }}" {{ $selectedCategory === $category->id ? 'selected' : '' }}>{{ $category->name }}</option>@endforeach
                               </select>
                               @if($errors->has('category'))
                               <div class="error text-danger">{{ $errors->first('category') }}</div>
@@ -106,17 +104,17 @@
                         <tr id="tr_{{$gallery->id}}">
                            <!-- <td><input type="checkbox" class="sub_chk" data-id="{{$gallery->id}}"></td> -->
                            <td>
-                               <a href="{{route('admin.activitycategory.edit', $gallery->id)}}"><i class="fa fa-edit" style="color:white;font-size:15px;background-color:#0275d8;padding:8px;border-radius:200px;"></i></a>
+                              <a href="{{route('admin.activitycategory.edit', $gallery->id)}}"><i class="fa fa-edit" style="color:white;font-size:15px;background-color:#0275d8;padding:8px;border-radius:200px;"></i></a>
                               <a href="{{route('admin.activitycategory.destroy', $gallery->id)}}" onclick="return confirm('Sure ! You want to delete ?');"><i class="fa fa-trash" style="color:white;font-size:15px;background-color:red;padding:8px;border-radius:200px;"></i></a>
                            </td>
                            <td>
-                           {{$gallery->category}}
+                              {{$gallery->category}}
                            </td>
                            <td>
-                           {{$gallery->text}}
+                              {{$gallery->text}}
                            </td>
                            <td>
-                              <img height="50" src="{{$gallery->file ? $gallery->file : 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png'}}" alt="" >
+                              <img height="50" src="{{$gallery->file ? $gallery->file : 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png'}}" alt="">
                            </td>
                         </tr>
                         @endforeach
@@ -142,34 +140,33 @@
 
 @section('script')
 <script>
-        $(function() {
+   $(function() {
 
-         $("form[name='activityform']").validate({
-                rules: {
-                  category:{
-                     required: true,
-                  },
-                  text:{
-                     required: true,
-                  },
-                  file: {
-                     required: true,
-                    },
-                },
-                submitHandler: function(form) {
-                    form.submit();
-                }
-            });
+      $("form[name='activityform']").validate({
+         rules: {
+            category: {
+               required: true,
+            },
+            text: {
+               required: true,
+            },
+            file: {
+               required: true,
+            },
+         },
+         submitHandler: function(form) {
+            form.submit();
+         }
       });
+   });
 
-      $("#file").change(function () {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-            $("#blah_acti").attr("src", e.target.result);
-        };
-        reader.readAsDataURL(this.files[0]);
-        $("#blah_acti").css("display", "block");
-    });
-
+   $("#file").change(function() {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+         $("#blah_acti").attr("src", e.target.result);
+      };
+      reader.readAsDataURL(this.files[0]);
+      $("#blah_acti").css("display", "block");
+   });
 </script>
 @endsection

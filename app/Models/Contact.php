@@ -18,9 +18,12 @@ class Contact extends Model
         parent::boot();
   
         static::created(function ($item) {
-                
-            $adminEmail = "sspreschool77@gmail.com";
-            Mail::to($adminEmail)->send(new ContactMail($item));
+            try {
+                $adminEmail = "sspreschool77@gmail.com";
+                Mail::to($adminEmail)->send(new ContactMail($item));
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::error('Contact notification mail failed: ' . $e->getMessage());
+            }
         });
     }
 }

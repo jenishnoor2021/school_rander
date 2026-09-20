@@ -12,6 +12,16 @@
          <li class="active">Gallery Image</li>
       </ol>
    </section>
+   @if(session()->has('message'))
+   <div class="alert text-white" style="background-color:#7EDD72; margin: 15px;">
+      {{ session()->get('message') }}
+   </div>
+   @endif
+   @if(session()->has('error'))
+   <div class="alert alert-danger" style="margin: 15px;">
+      {{ session()->get('error') }}
+   </div>
+   @endif
    <!-- Main content -->
    <section class="content">
       <div class="row">
@@ -31,20 +41,20 @@
                      {!! Form::open(['method'=>'POST', 'action'=> 'AdminGalleryController@store','files'=>true,'class'=>'form-horizontal','name'=>'galleryform']) !!}
                      @csrf
                      <div class="box-body">
-                        <!-- <div class="form-group">
-                           <label for="text" class="col-sm-2 control-label">Image Text</label>
-                           <div class="col-sm-10">
-                              <input type="text" class="form-control" name="text" id="text" placeholder="Enter name">
-                              @if($errors->has('text'))
+                        <div class="form-group">
+                           <label for="text" class="col-sm-3 control-label">Title / Caption</label>
+                           <div class="col-sm-9">
+                              <input type="text" class="form-control" name="text" id="text" placeholder="e.g. Classroom Explorers">
+                              @if(isset($errors) && $errors->has('text'))
                               <div class="error text-danger">{{ $errors->first('text') }}</div>
                               @endif
                            </div>
-                        </div> -->
+                        </div>
                         <div class="form-group">
                            <label for="file" class="col-sm-2 control-label">Image</label>
                            <div class="col-sm-10">
                               <input type="file" class="form-control" name="file[]" id="file" accept="image/*" multiple required>
-                              @if($errors->has('file'))
+                              @if(isset($errors) && $errors->has('file'))
                               <div class="error text-danger">{{ $errors->first('file') }}</div>
                               @endif
                            </div>
@@ -83,6 +93,7 @@
                            <th width="50px"><input type="checkbox" id="master"></th>
                            <th>Action</th>
                            <th>Gallery Image</th>
+                           <th>Title / Caption</th>
                            <th>Show</th>
                         </tr>
                      </thead>
@@ -98,10 +109,13 @@
                               <img height="50" src="{{$gallery->file ? $gallery->file : 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png'}}" alt="" >
                            </td>
                            <td>
+                              <strong>{{ $gallery->text ? $gallery->text : '-' }}</strong>
+                           </td>
+                           <td>
                               @if($gallery->is_show == 1)
-                              <a href="/admin/gallery/active/{{$gallery->id}}" class="btn btn-success">Active</a>
+                              <a href="/admin/gallery/active/{{$gallery->id}}" class="btn btn-success btn-xs">Active</a>
                               @else
-                              <a href="/admin/gallery/active/{{$gallery->id}}" class="btn btn-danger">De-active</a>
+                              <a href="/admin/gallery/active/{{$gallery->id}}" class="btn btn-danger btn-xs">De-active</a>
                               @endif
                            </td>
                         </tr>

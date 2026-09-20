@@ -1,187 +1,79 @@
-<!-- Start Footer Area -->
-<section class="footer-area pt-100 pb-70">
-  <div class="container">
-    <div class="row">
-      <div class="col-lg-3 col-sm-6">
-        <div class="single-footer-widget">
-          <div class="logo">
-            <h2>
-              <a href="{{ URL::to('/') }}">
-                <img src="{{asset('assets/img/logo.png')}}">
-              </a>
-            </h2>
-          </div>
-          <p>Seven Steps Pre-School, including all of our schools, is committed to acting on our new vision, mission, and values statements.
-</p>
-          <p>These new statements emphasize student success and well-being and reflect our commitment to excellence.</p>
-          <ul class="social">
-            <li>
-              <a href="https://www.facebook.com/profile.php?id=100090069094289&mibextid=ZbWKwL" target="_blank">
-                <i class='bx bxl-facebook'></i>
-              </a>
-            </li>
-            <li>
-              <a href="https://instagram.com/sevenstepspre?igshid=ZDdkNTZiNTM=" target="_blank">
-                <i class="bx bxl-instagram"></i>
-              </a>
-            </li>
-          </ul>
+<div class="container">
+  <div class="footer-grid-4col">
+    <!-- Brand Story Column -->
+    <div class="footer-brand-deck">
+      <div style="display: flex; align-items: center; gap: 0.85rem;">
+        <img src="{{ asset('assets/img/logo.png') }}" alt="Seven Steps Pre-School Logo" width="52" height="52" style="background: #fff; border-radius: 50%; padding: 4px;">
+        <div>
+          <span class="brand-title" style="font-size: 1.15rem;">SEVEN STEPS</span>
+          <p style="margin: 0; color: var(--saffron-light); font-family: var(--font-handwritten); font-size: 0.95rem; font-weight: 700;">Sunrise Group - Surat</p>
         </div>
       </div>
-
-      <div class="col-lg-3 col-sm-6">
-        <div class="single-footer-widget">
-          <h3>Contact Us</h3>
-
-          <ul class="footer-contact-info">
-            <li>
-              <i class='bx bxs-phone'></i>
-              <span>Phone</span>
-              <a href="tel:+9198791 46666">+9198791 46666 / +9199044 19333</a>
-            </li>
-            <li>
-              <i class='bx bx-envelope'></i>
-              <span>Email</span>
-              <a href="mailto:ssspre46666@gmail.com">ssspre46666@gmail.com</a>
-            </li>
-            <li>
-              <i class='bx bx-map'></i>
-              <span>Address</span>
-              Galaxy Imperia, Above District Bank, Pal Road, Surat.
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-sm-6">
-        <div class="single-footer-widget pl-5">
-          <h3>Activities</h3>
-
-          <ul class="quick-links">
-            <li>
-              <a href="{{ URL::to('/site/about') }}">About Us</a>
-            </li>
-            <li>
-              <a href="{{ URL::to('/site/enquiry') }}">Admissions Inquiry</a>
-            </li>
-            <li>
-              <a href="{{ URL::to('/site/fees-pay') }}">Fees Payment</a>
-            </li>
-            <li>
-              <a href="{{ URL::to('/site/academic_activities') }}">Academic Activities</a>
-            </li>
-            <li>
-              <a href="{{ URL::to('/site/gallery') }}">Gallery</a>
-            </li>
-            <li>
-              <a href="{{ URL::to('/site/contact') }}">Contact Us</a>
-            </li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="col-lg-3 col-sm-6">
-        <div class="single-footer-widget">
-          <h3>Photo Gallery</h3>
-
-          <ul class="photo-gallery-list">
-              @foreach($gallerys as $gallery)
-              @if($loop->index<9)
-                <li>
-                  <div class="box">
-                    <img src="{{$gallery->file}}" alt="gallery1">
-                    <a href="{{$gallery->file}}" class="link-btn" class="gallery-btn" data-imagelightbox="popup-btn"><i class='bx bx-search-alt'></i></a>
-                  </div>
-                </li>
-            @endif
-        @endforeach
-            <!--<li>-->
-            <!--  <div class="box">-->
-            <!--    <img src="{{asset('assets/img/gallery/gallery2.jpeg')}}" alt="gallery2">-->
-            <!--    <a href="{{asset('assets/img/gallery/gallery2.jpeg')}}" target="_blank" class="link-btn"></a>-->
-            <!--  </div>-->
-            <!--</li>-->
-
-            <!--<li>-->
-            <!--  <div class="box">-->
-            <!--    <img src="{{asset('assets/img/gallery/gallery3.jpeg')}}" alt="gallery3">-->
-            <!--    <a href="{{asset('assets/img/gallery/gallery3.jpeg')}}" target="_blank" class="link-btn"></a>-->
-            <!--  </div>-->
-            <!--</li>-->
-
-            <!--<li>-->
-            <!--  <div class="box">-->
-            <!--    <img src="{{asset('assets/img/gallery/gallery4.jpeg')}}" alt="gallery4">-->
-            <!--    <a href="{{asset('assets/img/gallery/gallery4.jpeg')}}" target="_blank" class="link-btn"></a>-->
-            <!--  </div>-->
-            <!--</li>-->
-
-            <!--<li>-->
-            <!--  <div class="box">-->
-            <!--    <img src="{{asset('assets/img/gallery/gallery5.jpeg')}}" alt="gallery5">-->
-            <!--    <a href="{{asset('assets/img/gallery/gallery5.jpeg')}}" target="_blank" class="link-btn"></a>-->
-            <!--  </div>-->
-            <!--</li>-->
-
-            <!--<li>-->
-            <!--  <div class="box">-->
-            <!--    <img src="{{asset('assets/img/gallery/gallery6.jpg')}}" alt="gallery6">-->
-            <!--    <a href="{{asset('assets/img/gallery/gallery6.jpeg')}}" target="_blank" class="link-btn"></a>-->
-            <!--  </div>-->
-            <!--</li>-->
-
-            <!--<li>-->
-            <!--  <div class="box">-->
-            <!--    <img src="{{asset('assets/img/gallery/gallery7.jpeg')}}" alt="gallery7">-->
-            <!--    <a href="{{asset('assets/img/gallery/gallery7.jpeg')}}" target="_blank" class="link-btn"></a>-->
-            <!--  </div>-->
-            <!--</li>-->
-
-            <!--<li>-->
-            <!--  <div class="box">-->
-            <!--    <img src="{{asset('assets/img/gallery/gallery8.jpeg')}}" alt="gallery8">-->
-            <!--    <a href="{{asset('assets/img/gallery/gallery8.jpeg')}}" target="_blank" class="link-btn"></a>-->
-            <!--  </div>-->
-            <!--</li>-->
-
-            <!--<li>-->
-            <!--  <div class="box">-->
-            <!--    <img src="{{asset('assets/img/gallery/gallery9.jpeg')}}" alt="gallery9">-->
-            <!--    <a href="{{asset('assets/img/gallery/gallery9.jpeg')}}" target="_blank" class="link-btn"></a>-->
-            <!--  </div>-->
-            <!--</li>-->
-          </ul>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
-<!-- End Footer Area -->
-
-<!-- Start Copy Right Area -->
-<div class="copyright-area">
-  <div class="container">
-    <div class="copyright-area-content">
       <p>
-        Copyright @ Seven Steps Pre-School All Rights Reserved by
+        Seven Steps Pre-School, including all of our schools, is committed to acting on our new vision, mission, and values statements. We nurture curious minds into compassionate future leaders.
       </p>
+      <div class="footer-social-links">
+        <a href="https://facebook.com" target="_blank" class="social-circle-btn" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+        <a href="https://instagram.com" target="_blank" class="social-circle-btn" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+        <a href="https://youtube.com" target="_blank" class="social-circle-btn" aria-label="YouTube"><i class="fab fa-youtube"></i></a>
+      </div>
+    </div>
+
+    <!-- Quick Explore Column -->
+    <div class="footer-col">
+      <h4>Explore</h4>
+      <div class="footer-nav-links">
+        <a href="{{ route('aboutUs') }}"><i class="fas fa-angle-right"></i> About Us</a>
+        <a href="{{ route('admission') }}"><i class="fas fa-angle-right"></i> Admissions</a>
+        <a href="{{ route('facilities') }}"><i class="fas fa-angle-right"></i> Facilities</a>
+        <a href="{{ route('academic_activities') }}"><i class="fas fa-angle-right"></i> Activities</a>
+        <a href="{{ route('event') }}"><i class="fas fa-angle-right"></i> Events</a>
+        <a href="{{ route('gallery') }}"><i class="fas fa-angle-right"></i> Gallery</a>
+      </div>
+    </div>
+
+    <!-- Campus Branches Column -->
+    <div class="footer-col">
+      <h4>Branches</h4>
+      <div class="footer-nav-links">
+        <a href="{{ route('branches') }}"><i class="fas fa-map-pin"></i> Pal Main Campus</a>
+        <a href="{{ route('branches') }}"><i class="fas fa-map-pin"></i> Vesu Center</a>
+        <a href="{{ route('branches') }}"><i class="fas fa-map-pin"></i> Adajan Center</a>
+        <a href="{{ route('branches') }}"><i class="fas fa-map-pin"></i> Katargam Center</a>
+        <a href="{{ route('branches') }}"><i class="fas fa-map-pin"></i> Varachha Center</a>
+        <a href="{{ route('branches') }}"><i class="fas fa-map-pin"></i> Althan Center</a>
+      </div>
+    </div>
+
+    <!-- Contact Info Column -->
+    <div class="footer-col">
+      <h4>Contact Us</h4>
+      <div style="display: flex; flex-direction: column; gap: 0.85rem; font-size: 0.9rem; color: rgba(255, 255, 255, 0.8);">
+        <div style="display: flex; gap: 0.65rem;">
+          <i class="fas fa-phone-alt" style="color: var(--saffron-light); margin-top: 0.2rem;"></i>
+          <div>
+            <a href="tel:+919879146666" style="color: #fff; font-weight: 600;">+91 98791 46666</a><br>
+            <a href="tel:+919904419333" style="color: #fff; font-weight: 600;">+91 99044 19333</a>
+          </div>
+        </div>
+        <div style="display: flex; gap: 0.65rem;">
+          <i class="fas fa-envelope" style="color: var(--saffron-light); margin-top: 0.2rem;"></i>
+          <a href="mailto:ssspre46666@gmail.com" style="color: #fff;">ssspre46666@gmail.com</a>
+        </div>
+        <div style="display: flex; gap: 0.65rem;">
+          <i class="fas fa-map-marker-alt" style="color: var(--saffron-light); margin-top: 0.2rem;"></i>
+          <span>Galaxy Imperia, Above District Bank, Pal Road, Surat.</span>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-<!-- End Copy Right Area -->
 
-<!-- Start Go Top Area -->
-<div class="go-top">
-  <i class='bx bx-up-arrow-alt'></i>
-</div>
-<!-- End Go Top Area -->
-
-<div class="sevenstep_brochure">
-  <a href="{{isset($brocher->file) ? $brocher->file : '' }}" target="_blank"><i class="bx bx-file"></i> Brochure</a>
-</div>
-<div class="sevenstep_brochure fees">
-  <a href="{{ URL::to('/site/fees-pay') }}"><i class="bx bx-indian-rupee-sign"></i> Fees Payment</a>
-</div>
-<div class="step_whatsapp">
-  <a href="https://wa.me/+919904419333/?text=Thank you for contacting Seven Steps Pre-School Please let us know how we can help you." target="_blank"><i class="bx bxl-whatsapp"></i> Live Chat</a>
+  <div class="footer-bottom-bar">
+    <p>&copy; 2026 Seven Steps Pre-School. All Rights Reserved. Managed by <strong>Sunrise Group - Surat</strong>.</p>
+    <div style="display: flex; gap: 1.25rem;">
+      <a href="{{ route('policy') }}" style="color: rgba(255, 255, 255, 0.7);">Refund Policy</a>
+      <a href="{{ route('circular') }}" style="color: rgba(255, 255, 255, 0.7);">Circulars</a>
+      <a href="{{ route('career') }}" style="color: rgba(255, 255, 255, 0.7);">Career</a>
+    </div>
+  </div>
 </div>

@@ -33,10 +33,10 @@
                @csrf
                <div class="box-body">
                   <div class="form-group">
-                     <label for="text" class="col-sm-2 control-label">Image Text</label>
+                     <label for="text" class="col-sm-2 control-label">Title / Caption</label>
                      <div class="col-sm-4">
-                        <input type="text" class="form-control" name="text" id="text" placeholder="Enter name">
-                        @if($errors->has('text'))
+                        <input type="text" class="form-control" name="text" id="text" placeholder="e.g. Classroom Explorers">
+                        @if(isset($errors) && $errors->has('text'))
                         <div class="error text-danger">{{ $errors->first('text') }}</div>
                         @endif
                      </div>
@@ -45,7 +45,7 @@
                      <label for="file" class="col-sm-2 control-label">Image</label>
                      <div class="col-sm-4">
                         <input type="file" class="form-control" name="file" id="file" accept="image/*" required>
-                        @if($errors->has('file'))
+                        @if(isset($errors) && $errors->has('file'))
                         <div class="error text-danger">{{ $errors->first('file') }}</div>
                         @endif
                      </div>

@@ -1,32 +1,19 @@
-<!-- Required meta tags -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="csrf-token" content="{{ csrf_token() }}">
+<title>About Us | Seven Steps Pre-School, Surat</title>
+<meta name="description" content="Learn about Seven Steps Pre-School Surat - vision, mission, leadership, and our commitment to early childhood educational excellence.">
+<link rel="icon" type="image/png" href="{{ asset('assets/img/logo.png') }}">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/bootstrap.min.css')}}">
-<!-- Animate CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/animate.min.css')}}">
-<!-- Meanmenu CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/meanmenu.css')}}">
-<!-- Boxicons CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/boxicons.min.css')}}">
-<!-- Owl Carousel CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/owl.carousel.min.css')}}">
-<!-- Owl Carousel Default CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/owl.theme.default.min.css')}}">
-<!-- Odometer CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/odometer.min.css')}}">
-<!-- Magnific Popup CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/magnific-popup.min.css')}}">
-<!-- Imagelightbox CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/imagelightbox.min.css')}}">
-<!-- Style CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/style.css')}}">
-<!-- Dark CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/dark.css')}}">
-<!-- Responsive CSS -->
-<link rel="stylesheet" href="{{asset('assets/css/responsive.css')}}">
+<!-- Google Fonts: Fredoka (Headings) + Caveat (Handwritten) + Plus Jakarta Sans (Body) -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
-<title>Seven Steps Pre-School - Best School in Surat, English, Gujarati, Marathi medium</title>
+<!-- Font Awesome Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 
-<link rel="icon" type="image/png" href="{{asset('assets/img/favicon.png')}}">
+<!-- Stylesheets -->
+<link rel="stylesheet" href="{{ asset('assets/css/design-system.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">

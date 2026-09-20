@@ -26,10 +26,11 @@
                      <thead class="bg-primary">
                         <tr>
                            <th>Action</th>
-                           <th>First name</th>
+                           <th>Full Name</th>
                            <th>Email</th>
-                           <th>File</th>
-                           <th>Phone no</th>
+                           <th>Phone No</th>
+                           <th>Position</th>
+                           <th>Resume / File</th>
                            <th>Date</th>
                         </tr>
                      </thead>
@@ -43,7 +44,14 @@
                            <td>{{$enquirey->fname}}</td>
                            <td>{{$enquirey->email}}</td>
                            <td>{{$enquirey->phone}}</td>
-                           <td><a href="{{$enquirey->file}}" target="_blank">PDF</a></td>
+                           <td>{{$enquirey->subject ?? '-'}}</td>
+                           <td>
+                              @if($enquirey->file && $enquirey->file != '/careerimg/')
+                              <a href="{{$enquirey->file}}" target="_blank" class="btn btn-xs btn-info">View File</a>
+                              @else
+                              -
+                              @endif
+                           </td>
                            <td>{{$enquirey->created_at}}</td>
                         </tr>
                         @endforeach

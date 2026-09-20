@@ -1,327 +1,154 @@
-<!-- Start Navbar Area -->
-<div class="top-navbar">
-   <div class="container">
-      <div class="row">
-         <div class="col-md-6 col-sm-6 col-xs-6">
-            <div class="nav-left">
-               <div class="email">
-                  <i class="bx bx-envelope"></i>
-                  <a href="mailto:ssspre46666@gmail.com">ssspre46666@gmail.com</a>
-               </div>
-               <div class="callus">
-                  <i class="bx bxs-phone"></i>
-                  <a href="tel:+919328466363">+91 93284 66363</a>
-               </div>
-            </div>
+<div class="container">
+   @php
+   $frontendCategories = \App\Models\Category::orderBy('name')->get()->groupBy('type');
+   $currentRoute = Route::currentRouteName();
+   $isHome = request()->is('/') || request()->path() === '/';
+   $isAbout = request()->routeIs([
+   'aboutUs',
+   'managing_director',
+   'coordinator',
+   'academic-head-message',
+   'principal-message',
+   'circular',
+   'facilities',
+   'branches'
+   ]);
+   $isAdmission = request()->routeIs([
+   'admission',
+   'enquiry',
+   'fees-pay',
+   'policy',
+   'career'
+   ]);
+   $isActivities = request()->routeIs(['academic_activities', 'extra_activities', 'activities.category']);
+   $isEvents = request()->routeIs(['event', 'achievements', 'events.category', 'achievements.category']);
+   $isGallery = request()->routeIs(['gallery', 'media-gallery', 'video-gallery']);
+   $isContact = request()->routeIs('contact');
+   @endphp
+   <div class="header-inner">
+      <!-- School Brand Logo -->
+      <a href="{{ url('/') }}" class="brand-logo" aria-label="Seven Steps Pre-School Home">
+         <img src="{{ asset('assets/img/logo.png') }}" alt="Seven Steps Pre-School Logo" width="56" height="56">
+         <div class="brand-info">
+            <span class="brand-title">SEVEN STEPS</span>
+            <span class="brand-tagline">Sunrise Group - Surat</span>
          </div>
-         <div class="col-md-6 col-sm-6 col-xs-6">
-            <div class="nav-right">
-               <ul class="social">
-                  <li>
-                     <a href="https://www.facebook.com/profile.php?id=100090069094289&mibextid=ZbWKwL" target="_blank">
-                        <i class="bx bxl-facebook"></i>
-                     </a>
-                  </li>
-                  <li>
-                     <a href="https://instagram.com/sevenstepspre?igshid=ZDdkNTZiNTM=" target="_blank">
-                        <i class="bx bxl-instagram"></i>
-                     </a>
-                  </li>
-               </ul>
-               <div class="nav_btn default-btn">
-                  <a href="http://schools.skyzonegroup.com/" target="_blank">Student Login</a>
-               </div>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
+      </a>
 
-<div class="navbar-area">
-   <div class="main-responsive-nav">
-      <div class="container">
-         <div class="main-responsive-menu">
-            <div class="logo" style="display: inline-block;">
-               <a href="{{ URL::to('/') }}">
-                  <img src="{{asset('assets/img/logo.png')}}" class="black-logo" alt="image">
+      <!-- Desktop Navigation Menu -->
+      <nav class="desktop-nav" aria-label="Main Navigation">
+         <ul class="nav-menu">
+            <li class="nav-item {{ $isHome ? 'active' : '' }}">
+               <a href="{{ url('/') }}" class="nav-link {{ $isHome ? 'active' : '' }}">Home</a>
+            </li>
+
+            <!-- ABOUT US DROPDOWN -->
+            <li class="nav-item {{ $isAbout ? 'active' : '' }}">
+               <a href="{{ route('aboutUs') }}" class="nav-link {{ $isAbout ? 'active' : '' }}">
+                  About Us <i class="fas fa-chevron-down"></i>
                </a>
-            </div>
-            <div class="others-options mobile d-flex align-items-center">
-               <div class="option-item">
-                  <a href="{{ URL::to('/site/enquiry') }}" class="default-btn">Admission Inquiry</a>
+               <div class="dropdown-panel">
+                  <a href="{{ route('aboutUs') }}" class="dropdown-link {{ request()->routeIs('aboutUs') ? 'active' : '' }}"><i class="fas fa-info-circle"></i> About Us</a>
+                  <a href="{{ route('managing_director') }}" class="dropdown-link {{ request()->routeIs('managing_director') ? 'active' : '' }}"><i class="fas fa-user-tie"></i> Managing Director</a>
+                  <a href="{{ route('coordinator') }}" class="dropdown-link {{ request()->routeIs('coordinator') ? 'active' : '' }}"><i class="fas fa-user-check"></i> Co-Ordinator</a>
+                  <a href="{{ route('academic-head-message') }}" class="dropdown-link {{ request()->routeIs('academic-head-message') ? 'active' : '' }}"><i class="fas fa-graduation-cap"></i> Academic Head Message</a>
+                  <a href="{{ route('principal-message') }}" class="dropdown-link {{ request()->routeIs('principal-message') ? 'active' : '' }}"><i class="fas fa-comment-dots"></i> Principal Message</a>
+                  <a href="{{ route('circular') }}" class="dropdown-link {{ request()->routeIs('circular') ? 'active' : '' }}"><i class="fas fa-file-alt"></i> Circular</a>
+                  <a href="{{ route('facilities') }}" class="dropdown-link {{ request()->routeIs('facilities') ? 'active' : '' }}"><i class="fas fa-shapes"></i> School Facilities</a>
+                  <a href="{{ route('branches') }}" class="dropdown-link {{ request()->routeIs('branches') ? 'active' : '' }}"><i class="fas fa-map-marked-alt"></i> Branches</a>
                </div>
-            </div>
-         </div>
-      </div>
-   </div>
+            </li>
 
-   <div class="main-navbar">
-      <div class="container">
-         <nav class="navbar navbar-expand-md navbar-light">
-            <a class="navbar-brand" href="{{ URL::to('/') }}">
-               <img src="{{asset('assets/img/logo.png')}}" class="black-logo" alt="image">
-            </a>
+            <!-- ADMISSION & INQUIRY DROPDOWN -->
+            <li class="nav-item {{ $isAdmission ? 'active' : '' }}">
+               <a href="{{ route('admission') }}" class="nav-link {{ $isAdmission ? 'active' : '' }}">
+                  Admission & Inquiry <i class="fas fa-chevron-down"></i>
+               </a>
+               <div class="dropdown-panel">
+                  <a href="{{ route('admission') }}" class="dropdown-link {{ request()->routeIs('admission') ? 'active' : '' }}"><i class="fas fa-door-open"></i> Admission</a>
+                  <a href="{{ route('enquiry') }}" class="dropdown-link {{ request()->routeIs('enquiry') ? 'active' : '' }}"><i class="fas fa-edit"></i> Admission Inquiry</a>
+                  <a href="{{ route('fees-pay') }}" class="dropdown-link {{ request()->routeIs('fees-pay') ? 'active' : '' }}"><i class="fas fa-credit-card"></i> Fees Payment</a>
+                  <a href="{{ route('policy') }}" class="dropdown-link {{ request()->routeIs('policy') ? 'active' : '' }}"><i class="fas fa-shield-alt"></i> Refund & Cancel Policy</a>
+                  <a href="{{ route('career') }}" class="dropdown-link {{ request()->routeIs('career') ? 'active' : '' }}"><i class="fas fa-briefcase"></i> Career</a>
+               </div>
+            </li>
 
-            <div class="collapse navbar-collapse mean-menu" id="navbarSupportedContent">
-               <ul class="navbar-nav">
-                  <li class="nav-item">
-                     <a href="{{ URL::to('/') }}" class="nav-link {{ (request()->segment(1) == '') ? 'active' : '' }}">
-                        Home
+            <!-- ACTIVITIES DROPDOWN -->
+            <li class="nav-item {{ $isActivities ? 'active' : '' }}">
+               <a href="{{ route('academic_activities') }}" class="nav-link {{ $isActivities ? 'active' : '' }}">
+                  Activities <i class="fas fa-chevron-down"></i>
+               </a>
+               <div class="dropdown-panel">
+                  <div class="has-nested">
+                     <a href="{{ route('academic_activities') }}" class="dropdown-link {{ request()->routeIs('academic_activities') ? 'active' : '' }}">
+                        <i class="fas fa-palette"></i> Academic Activities <i class="fas fa-chevron-right"></i>
                      </a>
-                  </li>
+                     <div class="nested-panel">
+                        @foreach($frontendCategories->get('activity', collect()) as $category)
+                        <a href="{{ route('activities.category', $category->slug) }}" class="dropdown-link {{ request()->routeIs('activities.category', ['slug' => $category->slug]) ? 'active' : '' }}"><i class="fas fa-circle"></i> {{ $category->name }}</a>
+                        @endforeach
+                     </div>
+                  </div>
+                  <a href="{{ route('extra_activities') }}" class="dropdown-link {{ request()->routeIs('extra_activities') ? 'active' : '' }}"><i class="fas fa-running"></i> Extra Activities</a>
+               </div>
+            </li>
 
-                  <li class="nav-item">
-                     <a href="javascript::void(0);" class="nav-link {{ (request()->segment(2) == 'about') || (request()->segment(2) == 'branch-head') || (request()->segment(2) == 'managing_director') || (request()->segment(2) == 'principal-message') || (request()->segment(2) == 'incharge-message') || (request()->segment(2) == 'circular') || (request()->segment(2) == 'facilities') || (request()->segment(2) == 'branches') ? 'active' : '' }}">
-                        About Us
-                        <i class='bx bx-chevron-down'></i>
+            <!-- EVENTS DROPDOWN -->
+            <li class="nav-item {{ $isEvents ? 'active' : '' }}">
+               <a href="{{ route('event') }}" class="nav-link {{ $isEvents ? 'active' : '' }}">
+                  Events <i class="fas fa-chevron-down"></i>
+               </a>
+               <div class="dropdown-panel">
+                  <div class="has-nested">
+                     <a href="{{ route('event') }}" class="dropdown-link {{ request()->routeIs('event') ? 'active' : '' }}">
+                        <i class="fas fa-calendar-alt"></i> Event <i class="fas fa-chevron-right"></i>
                      </a>
-                     <ul class="dropdown-menu">
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/about') }}" class="nav-link {{ (request()->segment(2) == 'about') ? 'active' : '' }}">
-                              About Us
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/managing_director') }}" class="nav-link {{ (request()->segment(2) == 'managing_director') ? 'active' : '' }}">
-                              Managing Director
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/branch-head') }}" class="nav-link {{ (request()->segment(2) == 'branch-head') ? 'active' : '' }}">
-                              Co-ordinator
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/principal-message') }}" class="nav-link {{ (request()->segment(2) == 'principal-message') ? 'active' : '' }}">
-                              Academic Head Message
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/incharge-message') }}" class="nav-link {{ (request()->segment(2) == 'incharge-message') ? 'active' : '' }}">
-                              Principal Message
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/circular') }}" class="nav-link {{ (request()->segment(2) == 'circular') ? 'active' : '' }}">
-                              Circular
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/facilities') }}" class="nav-link {{ (request()->segment(2) == 'facilities') ? 'active' : '' }}">
-                              School Facilities
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/branches') }}" class="nav-link {{ (request()->segment(2) == 'branches') ? 'active' : '' }}">
-                              Branches
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-
-                  <li class="nav-item">
-                     <a href="javascript::void(0);" class="nav-link {{ (request()->segment(2) == 'admissions') || (request()->segment(2) == 'enquiry') || (request()->segment(2) == 'fees-pay') || (request()->segment(2) == 'policy') || (request()->segment(2) == 'career') ? 'active' : '' }}">
-                        Admission and Inquiry
-                        <i class='bx bx-chevron-down'></i>
+                     <div class="nested-panel">
+                        @foreach($frontendCategories->get('event', collect()) as $category)
+                        <a href="{{ route('events.category', $category->slug) }}" class="dropdown-link {{ request()->routeIs('events.category', ['slug' => $category->slug]) ? 'active' : '' }}"><i class="fas fa-calendar-day"></i> {{ $category->name }}</a>
+                        @endforeach
+                     </div>
+                  </div>
+                  <div class="has-nested">
+                     <a href="{{ route('achievements') }}" class="dropdown-link {{ request()->routeIs('achievements') ? 'active' : '' }}">
+                        <i class="fas fa-award"></i> Achievements <i class="fas fa-chevron-right"></i>
                      </a>
-                     <ul class="dropdown-menu">
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/admissions') }}" class="nav-link {{ (request()->segment(2) == 'admissions') ? 'active' : '' }}">
-                              Admission
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/enquiry') }}" class="nav-link {{ (request()->segment(2) == 'enquiry') ? 'active' : '' }}">
-                              Admission Inquiry
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/fees-pay') }}" class="nav-link {{ (request()->segment(2) == 'fees-pay') ? 'active' : '' }}">
-                              Fees Payment
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/policy') }}" class="nav-link {{ (request()->segment(2) == 'policy') ? 'active' : '' }}">
-                              Refund & Cancel Policy
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/career') }}" class="nav-link {{ (request()->segment(2) == 'career') ? 'active' : '' }}">
-                              Career
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class="nav-item">
-                     <a href="javascript::void(0);" class="nav-link {{ (request()->segment(2) == 'academic_activities') || (request()->segment(2) == 'extra_activities') ? 'active' : '' }}">
-                        Activities
-                        <i class='bx bx-chevron-down'></i>
-                     </a>
-                     <ul class="dropdown-menu">
-                        <li class="nav-item">
-                            <!--<a href="{{ URL::to('/site/academic_activities') }}" class="nav-link {{ (request()->segment(2) == 'academic_activities') ? 'active' : '' }}">-->
-                            <a href="javascript::void(0);" class="nav-link {{ (request()->segment(3) == 'celebration') || (request()->segment(3) == 'competition') || (request()->segment(3) == 'club') ? 'active' : '' }}">
-                              Academic Activities
-                              <i class='bx bx-chevron-right'></i>
-                            </a>
-                            <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/academic_activities/celebration') }}" class="nav-link {{ (request()->segment(3) == 'celebration') ? 'active' : '' }}">
-                                      Celebration
-                                   </a>
-                                </li>
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/academic_activities/competition') }}" class="nav-link {{ (request()->segment(3) == 'competition') ? 'active' : '' }}">
-                                      Competition
-                                   </a>
-                                </li>
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/academic_activities/club') }}" class="nav-link {{ (request()->segment(3) == 'club') ? 'active' : '' }}">
-                                      Club Activities
-                                   </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/extra_activities') }}" class="nav-link {{ (request()->segment(2) == 'extra_activities') ? 'active' : '' }}">
-                              Extra Activities
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class="nav-item">
-                     <a href="javascript::void(0);" class="nav-link {{ (request()->segment(2) == 'event') || (request()->segment(2) == 'achievements') ? 'active' : '' }}">
-                        Events
-                        <i class='bx bx-chevron-down'></i>
-                     </a>
-                     <ul class="dropdown-menu">
-                        <li class="nav-item">
-                           <!--<a href="{{ URL::to('/site/event') }}" class="nav-link {{ (request()->segment(2) == 'event') ? 'active' : '' }}">-->
-                           <a href="javascript::void(0);" class="nav-link {{ (request()->segment(3) == 'annual') || (request()->segment(3) == 'sport') || (request()->segment(3) == 'parent') || (request()->segment(3) == 'grand_parent') || (request()->segment(3) == 'parenting') || (request()->segment(3) == 'health') || (request()->segment(3) == 'convocation') ? 'active' : '' }}">
-                              Events
-                              <i class='bx bx-chevron-right'></i>
-                           </a>
-                           <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/event/annual') }}" class="nav-link {{ (request()->segment(3) == 'annual') ? 'active' : '' }}">
-                                      Annual Day
-                                   </a>
-                                </li>
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/event/sport') }}" class="nav-link {{ (request()->segment(3) == 'sport') ? 'active' : '' }}">
-                                      Sport Day
-                                   </a>
-                                </li>
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/event/parent') }}" class="nav-link {{ (request()->segment(3) == 'parent') ? 'active' : '' }}">
-                                      Parents Day
-                                   </a>
-                                </li>
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/event/grand_parent') }}" class="nav-link {{ (request()->segment(3) == 'grand_parent') ? 'active' : '' }}">
-                                      Grand parents Day
-                                   </a>
-                                </li>
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/event/parenting') }}" class="nav-link {{ (request()->segment(3) == 'parenting') ? 'active' : '' }}">
-                                      Parenting Seminar
-                                   </a>
-                                </li>
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/event/health') }}" class="nav-link {{ (request()->segment(3) == 'health') ? 'active' : '' }}">
-                                      Health Check Up Camp
-                                   </a>
-                                </li>
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/event/convocation') }}" class="nav-link {{ (request()->segment(3) == 'convocation') ? 'active' : '' }}">
-                                      Convocation Day
-                                   </a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item">
-                            <!--<a href="javascript::void(0);" class="nav-link {{ (request()->segment(2) == 'achievements') ? 'active' : '' }}">-->
-                           <a href="{{ URL::to('/site/achievements') }}" class="nav-link {{ (request()->segment(3) == 'student') || (request()->segment(3) == 'principal') ? 'active' : '' }}">
-                              Achievements
-                              <i class='bx bx-chevron-right'></i>
-                           </a>
-                           <ul class="dropdown-menu">
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/achievements/student') }}" class="nav-link {{ (request()->segment(3) == 'student') ? 'active' : '' }}">
-                                      Students Achievement
-                                   </a>
-                                </li>
-                                <li class="nav-item">
-                                   <a href="{{ URL::to('/site/achievements/principal') }}" class="nav-link {{ (request()->segment(3) == 'principal') ? 'active' : '' }}">
-                                      Principal Achievement
-                                   </a>
-                                </li>
-                            </ul>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class="nav-item">
-                     <a href="javascript::void(0);" class="nav-link {{ (request()->segment(2) == 'gallery') || (request()->segment(2) == 'media-gallery') || (request()->segment(2) == 'video-gallery') ? 'active' : '' }}">
-                        Gallery
-                        <i class='bx bx-chevron-down'></i>
-                     </a>
-                     <ul class="dropdown-menu">
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/gallery') }}" class="nav-link {{ (request()->segment(2) == 'gallery') ? 'active' : '' }}">
-                              Photo Gallery
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/media-gallery') }}" class="nav-link {{ (request()->segment(2) == 'media-gallery') ? 'active' : '' }}">
-                              Media Gallery
-                           </a>
-                        </li>
-                        <li class="nav-item">
-                           <a href="{{ URL::to('/site/video-gallery') }}" class="nav-link {{ (request()->segment(2) == 'video-gallery') ? 'active' : '' }}">
-                              Video Gallery
-                           </a>
-                        </li>
-                     </ul>
-                  </li>
-                  <li class="nav-item">
-                     <a href="{{ URL::to('/site/contact') }}" class="nav-link {{ (request()->segment(2) == 'contact') ? 'active' : '' }}">
-                        Contact Us
-                     </a>
-                  </li>
-               </ul>
-               <div class="others-options d-flex align-items-center">
-                  <!-- <div class="option-item">-->
-                  <!--   <a href="{{ URL::to('/site/fees-pay') }}" class="default-btn">Pay Now</a>-->
-                  <!--</div>-->
-                  <div class="option-item">
-                     <a href="{{ URL::to('/site/enquiry') }}" class="default-btn">Admission Inquiry</a>
+                     <div class="nested-panel">
+                        @foreach($frontendCategories->get('achievement', collect()) as $category)
+                        <a href="{{ route('achievements.category', $category->slug) }}" class="dropdown-link {{ request()->routeIs('achievements.category', ['slug' => $category->slug]) ? 'active' : '' }}"><i class="fas fa-award"></i> {{ $category->name }}</a>
+                        @endforeach
+                     </div>
                   </div>
                </div>
-            </div>
-         </nav>
-      </div>
-   </div>
+            </li>
 
-   <div class="others-option-for-responsive">
-      <div class="container">
-         <!-- <div class="dot-menu">
-                        <div class="inner">
-                            <div class="circle circle-one"></div>
-                            <div class="circle circle-two"></div>
-                            <div class="circle circle-three"></div>
-                        </div>
-                    </div> -->
-
-         <div class="container">
-            <div class="option-inner">
-               <div class="others-options d-flex align-items-center">
-                  <div class="option-item">
-                     <a href="{{ URL::to('/site/contact') }}" class="default-btn">Contact Us</a>
-                  </div>
+            <!-- GALLERY DROPDOWN -->
+            <li class="nav-item {{ $isGallery ? 'active' : '' }}">
+               <a href="{{ route('gallery') }}" class="nav-link {{ $isGallery ? 'active' : '' }}">
+                  Gallery <i class="fas fa-chevron-down"></i>
+               </a>
+               <div class="dropdown-panel">
+                  <a href="{{ route('gallery') }}" class="dropdown-link {{ request()->routeIs('gallery') ? 'active' : '' }}"><i class="fas fa-images"></i> Photo Gallery</a>
+                  <a href="{{ route('media-gallery') }}" class="dropdown-link {{ request()->routeIs('media-gallery') ? 'active' : '' }}"><i class="fas fa-newspaper"></i> Media Gallery</a>
+                  <a href="{{ route('video-gallery') }}" class="dropdown-link {{ request()->routeIs('video-gallery') ? 'active' : '' }}"><i class="fas fa-video"></i> Video Gallery</a>
                </div>
-            </div>
-         </div>
+            </li>
+
+            <!-- CONTACT -->
+            <li class="nav-item {{ $isContact ? 'active' : '' }}">
+               <a href="{{ route('contact') }}" class="nav-link {{ $isContact ? 'active' : '' }}">Contact</a>
+            </li>
+         </ul>
+      </nav>
+
+      <!-- Header Right CTA Group -->
+      <div class="header-cta-group">
+         <a href="{{ route('enquiry') }}" class="btn-wonder btn-wonder-primary">
+            <i class="fas fa-paper-plane"></i> Apply Now
+         </a>
+         <button class="mobile-menu-btn" aria-label="Toggle Mobile Menu">
+            <i class="fas fa-bars"></i>
+         </button>
       </div>
    </div>
 </div>
-<!-- End Navbar Area -->

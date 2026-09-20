@@ -1,162 +1,154 @@
 @extends('layouts.front')
 @section('content')
 
-<!-- Start Page Banner -->
-<div class="page-banner-area">
-  <div class="d-table">
-    <div class="d-table-cell">
-      <div class="container">
-        <div class="page-banner-content">
-          <h2>Career</h2>
-          <ul>
-            <li>
-              <a href="{{URL::to('/')}}">Home</a>
-            </li>
-            <li>Career</li>
-          </ul>
-        </div>
-      </div>
-    </div>
+<!-- Storybook Wonder Subpage Banner -->
+<section class="subpage-wonder-banner">
+  <!-- Floating Background Doodles -->
+  <div class="doodle-element doodle-star" style="top: 15%; left: 8%; opacity: 0.6;" aria-hidden="true">
+    <i class="fas fa-star" style="color: var(--honey-light); font-size: 1.5rem;"></i>
   </div>
-</div>
-<!-- End Page Banner -->
+  <div class="doodle-element doodle-star" style="bottom: 20%; right: 10%; opacity: 0.6;" aria-hidden="true">
+    <i class="fas fa-star" style="color: var(--saffron-light); font-size: 1.25rem;"></i>
+  </div>
 
-<!-- Start Who We Are Area -->
-<section class="who-we-are ptb">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-12">
-        <div class="who-we-are-content">
-          <h3>Career</h3>
-          <P>Seven Steps Pre-School provides options for teachers to expand their knowledge opportunities for professional development, and offers leadership roles.</P>
-          <p>We invite qualified applications for teaching and non-teaching staff.</p>
-          <ul class="who-we-are-list about-page">
-            <li>
-              <span></span>
-              <b>Pre Primary:</b> PRE-P.T.C/P.T.C/T.T.C
-            </li>
-            <li>
-              <span></span>
-              <b>Primary:</b> P.T.C/B.A/B.Com/B.Sc With B.Ed
-            </li>
-            <li>
-              <span></span>
-              <b>Secondary:</b> B.A/M.A/B.Com/M.Com/B.Sc/M.Sc With B.Ed
-            </li>
-            <li>
-              <span></span>
-              <b>Higher Secondary:</b> B.A/M.A/B.Com/M.Com/B.Sc/M.Sc With B.Ed
-            </li>
-          </ul>
-        </div>
+    <div class="reveal-pop">
+      <h1>Careers at Seven Steps</h1>
+      <div class="breadcrumb-pill-trail">
+        <a href="{{ url('/') }}"><i class="fas fa-home"></i> Home</a> <i class="fas fa-angle-right" style="font-size: 0.75rem; opacity: 0.6;"></i>
+        <span>Admission & Inquiry</span><span>Career</span>
       </div>
     </div>
-  </div>
-
-  <div class="who-we-are-shape">
-    <img src="{{asset('assets/img/boy2.png')}}" alt="boy2">
   </div>
 </section>
-<!-- End Who We Are Area -->
 
-<!-- Start Who We Are Area -->
-<section class="who-we-are ptb gray-bg">
+<!-- Storybook Wave Divider -->
+<div class="storybook-wave wave-cream" aria-hidden="true">
+  <svg viewBox="0 0 1200 48" preserveAspectRatio="none">
+    <path d="M0,0 C150,40 350,-10 500,25 C650,60 900,5 1200,20 L1200,48 L0,48 Z"></path>
+  </svg>
+</div>
+
+
+<section class="section-py bg-white">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-12">
-        <div class="who-we-are-content">
-          <h3>Career Form</h3>
-          <div class="contact-form">
-            @if (\Session::has('alert'))
-            <!--<div class="alert alert-success" id="displayhide">-->
-            <!--  {!! \Session::get('alert') !!}-->
-            <!--  <button id="hidAlert">X</button>-->
-            <!--</div>-->
-            <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-              <script>
-              Swal.fire({
-                title: 'success',
-                text: 'Your Message send Successfully',
-                icon: 'success',
-                confirmButtonText: 'OK'
-              });
-            </script>
-            @endif
-            <form method="POST" action="/careerstore" id="career_form" enctype="multipart/form-data">
-            @csrf
-              <div class="row">
-                <div class="col-lg-6 col-md-6 mt-3">
-                  <div class="form-group">
-                    <label for="fname">First Name:<span style="color:#fe0c12;">*</span></label>
-                    <input type="text" name="fname" id="fname" class="form-control" required data-error="Please enter your name" placeholder="Your First Name">
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
+    <div class="section-header reveal-pop">
+      <span class="section-tag"><i class="fas fa-heart"></i> Join Our Family</span>
+      <h2>Work With Seven Steps Pre-School</h2>
+      <p>Passionate about nurturing future minds? We provide supportive culture, modern teaching tools, and continuous professional growth.</p>
+    </div>
 
-                <!-- <div class="col-lg-6 col-md-6">
-                  <div class="form-group">
-                    <label for="class">Last Name:<span style="color:#fe0c12;">*</span></label>
-                    <input type="text" name="class" id="class" class="form-control" required data-error="Please enter your email" placeholder="Your Last Name">
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div> -->
+    <!-- Current Openings -->
+    <div class="career-openings-grid">
+      <div class="facility-explorer-card reveal-pop" style="border-top: 4px solid var(--saffron);">
+        <span class="campus-pill-badge">Full Time</span>
+        <h3>Pre-Primary Teacher</h3>
+        <p>Qualified NTT / ECCEd / Montessori trained teachers with fluent English communication and warm bonding with little learners.</p>
+        <div style="font-size: 0.85rem; color: var(--text-muted);"><i class="fas fa-map-marker-alt"></i> Pal, Vesu, Adajan Campuses</div>
+      </div>
 
-                <div class="col-lg-6 col-md-12 mt-3">
-                  <div class="form-group">
-                    <label for="email">Email:<span style="color:#fe0c12;">*</span></label>
-                    <input type="email" name="email" id="email" class="form-control" required data-error="Please enter your email" placeholder="Email Id">
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
+      <div class="facility-explorer-card reveal-pop" style="border-top: 4px solid var(--mint);">
+        <span class="campus-pill-badge" style="background: var(--bg-pill-mint); color: var(--mint);">Full Time</span>
+        <h3>Art, Craft & Music Educator</h3>
+        <p>Creative instructors skilled in finger painting, clay modelling, rhymes, and kindergarten dramatics to lead lively studios.</p>
+        <div style="font-size: 0.85rem; color: var(--text-muted);"><i class="fas fa-map-marker-alt"></i> All Surat Campuses</div>
+      </div>
 
-                <div class="col-lg-6 col-md-12 mt-3">
-                  <div class="form-group">
-                    <label for="phone">Mobile No.:<span style="color:#fe0c12;">*</span></label>
-                    <input type="tel" name="phone" id="phone" class="form-control" required data-error="Please enter your phone number" placeholder="Your phone number">
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
+      <div class="facility-explorer-card reveal-pop" style="border-top: 4px solid var(--honey-dark);">
+        <span class="campus-pill-badge" style="background: var(--bg-pill-honey); color: var(--honey-dark);">Full Time</span>
+        <h3>Center Counselor & Admin</h3>
+        <p>Proactive professionals with excellent interpersonal skills, handling parent counseling, admissions, and campus operations.</p>
+        <div style="font-size: 0.85rem; color: var(--text-muted);"><i class="fas fa-map-marker-alt"></i> Head Office, Pal Road</div>
+      </div>
+    </div>
 
-                <!-- <div class="col-lg-6 col-md-12">
-                  <div class="form-group">
-                    <label for="school">Position applying for:<span style="color:#fe0c12;">*</span></label>
-                    <select name="merchant_param3" id="merchant_param3" class="valid form-control">
-                      <option value="">*** Selection for Position ***</option>
-                      <option value="Pre- Primary Teacher">Pre- Primary Teacher</option>
-                      <option value="Primary Teacher">Primary Teacher</option>
-                      <option value="Non-Teaching Staff">Non-Teaching Staff</option>
-                    </select>
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div> -->
+    <!-- Application Form -->
+    <div class="workbook-form-card reveal-pop">
+      <div class="washi-tape"></div>
+      <h3 style="font-family: var(--font-display); color: var(--navy); font-size: 1.5rem; text-align: center; margin-bottom: 1.5rem;">
+        Quick Teacher Application
+      </h3>
 
-                <div class="col-lg-12 col-md-12 mt-3">
-                  <div class="form-group">
-                    <label for="file">Upload your Resume:<span style="color:#fe0c12;">*</span></label>
-                    <input type="file" id="file" name="file" class="form-control" accept="application/pdf" required>
-                    <div class="help-block with-errors"></div>
-                  </div>
-                </div>
+      <div class="form-alert-box" id="careerAlertBox">
+        @if(session('success'))
+        <div class="form-alert form-alert-success">
+          <i class="fas fa-check-circle alert-icon"></i>
+          <div class="form-alert-content">
+            <div class="form-alert-title">Success!</div>
+            {{ session('success') }}
+          </div>
+          <button type="button" class="form-alert-close" onclick="this.parentElement.remove();">&times;</button>
+        </div>
+        @endif
+        @if(session('alert'))
+        <div class="form-alert form-alert-success">
+          <i class="fas fa-check-circle alert-icon"></i>
+          <div class="form-alert-content">
+            <div class="form-alert-title">Success!</div>
+            {{ session('alert') }}
+          </div>
+          <button type="button" class="form-alert-close" onclick="this.parentElement.remove();">&times;</button>
+        </div>
+        @endif
+        @if(isset($errors) && $errors->any())
+        <div class="form-alert form-alert-error">
+          <i class="fas fa-exclamation-circle alert-icon"></i>
+          <div class="form-alert-content">
+            <div class="form-alert-title">Please review the following errors:</div>
+            <ul style="margin: 0.25rem 0 0 1rem; padding: 0;">
+              @foreach($errors->all() as $error)
+              <li>{{ $error }}</li>
+              @endforeach
+            </ul>
+          </div>
+          <button type="button" class="form-alert-close" onclick="this.parentElement.remove();">&times;</button>
+        </div>
+        @endif
+      </div>
 
-                <div class="col-lg-12 col-md-12 mt-3">
-                  <button type="submit" class="default-btn">Submit</button>
-                  <div id="msgSubmit" class="h3 text-center hidden"></div>
-                  <div class="clearfix"></div>
-                </div>
-              </div>
-            </form>
+      <form class="interactive-form" id="careerApplicationForm" action="{{ route('storecareer') }}" method="POST" enctype="multipart/form-data">
+        @csrf
+        <div class="form-grid-2col">
+          <div class="form-field-group">
+            <label class="form-field-label">Full Name *</label>
+            <input type="text" name="fname" class="form-input-styled" placeholder="Enter your full name" value="{{ old('fname') }}" required>
+          </div>
+          <div class="form-field-group">
+            <label class="form-field-label">Mobile Number *</label>
+            <input type="tel" name="phone" class="form-input-styled" placeholder="10-digit mobile number" pattern="[0-9]{10}" maxlength="10" value="{{ old('phone') }}" required>
+          </div>
+          <div class="form-field-group">
+            <label class="form-field-label">Email Address *</label>
+            <input type="email" name="email" class="form-input-styled" placeholder="name@example.com" value="{{ old('email') }}" required>
+          </div>
+          <div class="form-field-group">
+            <label class="form-field-label">Position Applied For *</label>
+            <select name="subject" class="form-input-styled" required>
+              <option value="">Select Position</option>
+              <option value="Pre-Primary Teacher" {{ old('subject') == 'Pre-Primary Teacher' ? 'selected' : '' }}>Pre-Primary Teacher</option>
+              <option value="Art & Music Educator" {{ old('subject') == 'Art & Music Educator' ? 'selected' : '' }}>Art & Music Educator</option>
+              <option value="Center Counselor" {{ old('subject') == 'Center Counselor' ? 'selected' : '' }}>Center Counselor</option>
+              <option value="Other Staff" {{ old('subject') == 'Other Staff' ? 'selected' : '' }}>Other Staff</option>
+            </select>
+          </div>
+          <div class="form-field-group full-width">
+            <label class="form-field-label">Upload Resume / CV (PDF, DOC, DOCX - Max 5MB)</label>
+            <input type="file" name="file" class="form-input-styled" accept=".pdf,.doc,.docx">
+            <div class="file-input-help-text">Accepted formats: .pdf, .doc, .docx (Max 5MB)</div>
+          </div>
+          <div class="form-field-group full-width">
+            <label class="form-field-label">Experience & Qualifications</label>
+            <textarea name="detail" class="form-input-styled" rows="3" placeholder="Briefly describe your educational background and teaching experience...">{{ old('detail') }}</textarea>
           </div>
         </div>
-      </div>
+        <div style="text-align: center; margin-top: 1.5rem;">
+          <button type="submit" class="btn-wonder btn-wonder-primary" style="padding: 0.95rem 2.5rem; font-size: 1.08rem;">
+            <span class="btn-text"><i class="fas fa-paper-plane"></i> Send Application</span>
+          </button>
+        </div>
+      </form>
     </div>
   </div>
 </section>
-<!-- End Who We Are Area -->
-
-@include('includes.cat-area')
-
-<!-- class area start here -->
-@include('includes.admission-step')
-<!-- class area end here -->
 
 @endsection

@@ -1,237 +1,93 @@
 @extends('layouts.front')
 @section('content')
 
-<!-- Start Page Banner -->
-<div class="page-banner-area">
-  <div class="d-table">
-    <div class="d-table-cell">
-      <div class="container">
-        <div class="page-banner-content">
-          <h2>Circular</h2>
-          <ul>
-            <li>
-              <a href="{{URL::to('/')}}">Home</a>
-            </li>
-            <li>Circular</li>
-          </ul>
-        </div>
+<!-- Storybook Wonder Subpage Banner -->
+<section class="subpage-wonder-banner">
+  <!-- Floating Background Doodles -->
+  <div class="doodle-element doodle-star" style="top: 15%; left: 8%; opacity: 0.6;" aria-hidden="true">
+    <i class="fas fa-star" style="color: var(--honey-light); font-size: 1.5rem;"></i>
+  </div>
+  <div class="doodle-element doodle-star" style="bottom: 20%; right: 10%; opacity: 0.6;" aria-hidden="true">
+    <i class="fas fa-star" style="color: var(--saffron-light); font-size: 1.25rem;"></i>
+  </div>
+
+  <div class="container">
+    <div class="reveal-pop">
+      <h1>Circular & Guidelines</h1>
+      <div class="breadcrumb-pill-trail">
+        <a href="{{ url('/') }}"><i class="fas fa-home"></i> Home</a> <i class="fas fa-angle-right" style="font-size: 0.75rem; opacity: 0.6;"></i>
+        <a href="{{ route('aboutUs') }}">About Us</a> <i class="fas fa-angle-right" style="font-size: 0.75rem; opacity: 0.6;"></i> <span>Circular</span>
       </div>
     </div>
   </div>
+</section>
+
+<!-- Storybook Wave Divider -->
+<div class="storybook-wave wave-cream" aria-hidden="true">
+  <svg viewBox="0 0 1200 48" preserveAspectRatio="none">
+    <path d="M0,0 C150,40 350,-10 500,25 C650,60 900,5 1200,20 L1200,48 L0,48 Z"></path>
+  </svg>
 </div>
-<!-- End Page Banner -->
 
-<!-- Start Who We Are Area -->
-<section class="who-we-are ptb gray-bg">
+
+<section class="section-py bg-white">
   <div class="container">
-    <div class="row align-items-center">
-      <div class="col-lg-6">
-        <div class="who-we-are-image">
-          <img src="{{asset('assets/img/circular.jpg')}}" alt="circular">
+    <div class="editorial-split-layout" style="margin-bottom: 3.5rem;">
+      <div class="reveal-pop">
+        <div class="scrapbook-polaroid-frame">
+          <div class="washi-tape"></div>
+          <img src="/assets/img/circular_tree.png" alt="Educational Tree - Seven Steps Pre-School Guidelines">
+          <div class="scrapbook-caption">Rules of Growth & Character 🌳</div>
         </div>
       </div>
-      <div class="col-lg-6">
-        <div class="who-we-are-content">
-          <h3>Circular</h3>
-          <h6>We look forward to serve you the best education you need to fulfil your child’s dreams…Our school welcomes you!! (New academic year 2025-26)</h6>
-          <p>Following is the information which needs your kind attention.</p>
-          <ul class="who-we-are-list about-page">
-            <li>
-              <span></span>
-              2nd and 4th Saturday of every month will be holiday for students.
-            </li>
-            <li>
-              <span></span>
-              Kindly follow school planner for Holidays, Activities, Celebration, Competition and Exam dates. (In case of any changes or updates, school will send msg.)
-            </li>
-            <li>
-              <span></span>
-              Send your child in proper uniform with I-Card, hair should be combed (2 plaits for girls), nails must be trimmed.
-            </li>
-            <li>
-              <span></span>
-              Label your wards books, bag, tiffin-box and water bottle & send healthy breakfast.
-            </li>
-            <li>
-              <span></span>
-              Student must be regular and should reach on time at school.
-            </li>
-            <li>
-              <span></span>
-              Keep your children at home when they are sick.
-            </li>
-            <li>
-              <span></span>
-              You are requested not to send expensive gifts, eatables, chocolates and cakes for your ward's birthday to school. You can send stationary item (pencil, pen, eraser etc)
-            </li>
-            <li>
-              <span></span>
-              Kindly follow school Facebook and Instagram page.
-            </li>
-            <li>
-              <span></span>
-              It is compulsory to bring Parent I-card to Pick-up your child.
-            </li>
-            <li>
-              <span></span>
-              Send diary note for one day leave, Application to In-charge for more than 1 day leave and meet Principal for more than 3 days leave.
-            </li>
-            <li>
-              <span></span>
-              For any query, contact: Seven Steps School (Main Branch)<br>
-              Education related query: 9904415333, 9879636666<br>
-              For Fees details: 8780331646
-            </li>
-            <li>
-              <span></span>
-              For any query, contact: Seven Steps Pre-School<br>
-              Education related query: Morning- 9904419333, Noon -9328466363 <br>
-              For Fees details contact on: 7859824598
-            </li>
-            <h4 style="margin-top: 20px;margin-bottom: 15px;">FEES DETAILS :-</h4>
-            <li>
-              <span></span>
-             Monthly Fee Payment: Kindly pay the school fees between the 1st to 10th of every month
-            </li>
-            <!--<li>-->
-            <!--  <span></span>-->
-            <!--  2nd Installment fees should be paid in the month of July (1 st to 10th July 2025)-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--  <span></span>-->
-            <!--  3rd Installment fees should be paid in the month of Sep (1 st to 10th Sep 2025)-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--  <span></span>-->
-            <!--  4th Installment fees should be paid in the month of Dec (1 st to 10th Dec 2025)-->
-            <!--</li>-->
-            <!--<li>-->
-            <!--  <span></span>-->
-            <!--  5th Installment fees should be paid in the month of March (1 st to10th March 2026)-->
-            <!--</li>-->
-          </ul>
-        </div>
-      </div>
-      <div class="row" style="margin-bottom: 20px;">
-        <div class="col-lg-6: center;">
-          <table border="1" class="main_table01 table">
-            <thead class="thead-dark">
-              <tr style="">
-                <th colspan="3" style="background: #ffb87d;">
-                  <!--<h4>Pre Primary - Timing </h4>-->
-                  <h4 style="font-size: 20px;text-align: center;">School timing for all the standards is given below ( Monday to Saturday )</h4>
-                </th>
-              </tr>
-              <tr>
-                <th>Standard</th>
-                <th>Morning Batch</th>
-                <th>Afternoon Batch</th>
-              </tr>
-            </thead>
 
-            <tbody>
-              <tr>
-                <td>PG/NURSERY</td>
-                <td>8:00 am to 11:30 am</td>
-                <td>1:20pm to 4:20 pm</td>
-              </tr>
+      <div class="editorial-story-content reveal-pop">
+        <span class="section-tag"><i class="fas fa-book-open"></i> Student Handbook</span>
+        <h2>School Guidelines & Timings</h2>
+        <p class="editorial-lead-para">
+          General rules and regulations to ensure disciplined, harmonious, and safe functioning across all campuses.
+        </p>
 
-              <tr>
-                <td>JUNIOR KG</td>
-                <td>8:15 am to 12:00 noon </td>
-                <td>1:20pm to 4:35 pm</td>
-              </tr>
-
-              <tr>
-                <td>SENIOR KG</td>
-                <td>8:30 am to 12:15 pm</td>
-                <td>1:20pm to 4:45 pm</td>
-              </tr>
-            </tbody>
-          </table>
-        </div>
-        <!--<div class="col-lg-6">-->
-        <!--  <table border="1" class="main_table01 table">-->
-        <!--    <thead class="thead-dark">-->
-        <!--      <tr>-->
-        <!--        <th colspan="3" style="background: #ffb87d;">-->
-        <!--          <h4 style="font-size: 20px;text-align: center;">School timing for Seven Steps School Main Branch ( Monday to Saturday )</h4>-->
-        <!--        </th>-->
-        <!--      </tr>-->
-        <!--      <tr>-->
-        <!--        <th>Standard</th>-->
-        <!--        <th>Morning Batch</th>-->
-        <!--      </tr>-->
-        <!--    </thead>-->
-
-        <!--    <tbody>-->
-        <!--      <tr>-->
-        <!--        <td>JUNIOR KG</td>-->
-        <!--        <td>8: 00 am to 11: 30 am</td>-->
-        <!--        <td>8: 00 am to 11: 30 am</td>-->
-        <!--      </tr>-->
-        <!--      <tr>-->
-        <!--        <td>SENIOR KG</td>-->
-        <!--        <td>8: 00 am to 11: 30 am</td>-->
-        <!--        <td>8: 00 am to 11: 30 am</td>-->
-        <!--      </tr>-->
-        <!--    </tbody>-->
-        <!--  </table>-->
-        <!--</div>-->
-      </div>
-      <div class="col-lg-12">
-        <div class="who-we-are-content">
-          <h4>Regarding school uniform :</h4>
-          <div class="row">
-            <div class="col-lg-6">
-              <ul class="who-we-are-list about-page">
-                <h4 style="margin-top: 20px;margin-bottom: 15px;">FOR BOYS :-</h4>
-                <h6 style="margin-bottom: 15px;display: block;width: 100%;">FOR ALL STD :-</h6>
-                <li>
-                  <span></span>
-                  Pink T-shirt, Navy blue half pant, School logo Belt, White and Pink shocks, Double Velcro Black Shoes
-                </li>
-                <h6 style="margin-bottom: 15px;">For winter session :-</h6>
-                <li>
-                  <span></span>
-                  Red sweater or Red jacket
-                </li>
-              </ul>
+        <div style="background: var(--bg-canvas); border-radius: 20px; padding: 1.5rem; border: 2px solid var(--border-paper);">
+          <h4 style="font-family: var(--font-display); font-size: 1.15rem; color: var(--navy); margin-bottom: 0.75rem;">Daily Campus Shift Timings:</h4>
+          <div class="circular-timings-grid">
+            <div style="background: #fff; padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid var(--border-paper);">
+              <strong style="color: var(--saffron);">Play Group</strong><br>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">09:00 AM – 11:30 AM</span>
             </div>
-            <div class="col-lg-6">
-              <ul class="who-we-are-list about-page">
-                <h4 style="margin-top: 20px;margin-bottom: 15px;">FOR GIRLS :-</h4>
-                <h6 style="margin-bottom: 15px;display: block;width: 100%;">FOR ALL STD :-</h6>
-                <li>
-                  <span></span>
-                  Pink T-shirt, Navy Blue Skirt, School logo belt, white and pink shocks, double Velcro Black Shoes.
-                </li>
-              </ul>
+            <div style="background: #fff; padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid var(--border-paper);">
+              <strong style="color: var(--mint);">Nursery</strong><br>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">08:30 AM – 11:45 AM</span>
+            </div>
+            <div style="background: #fff; padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid var(--border-paper);">
+              <strong style="color: var(--honey-dark);">Junior KG</strong><br>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">08:00 AM – 12:00 PM</span>
+            </div>
+            <div style="background: #fff; padding: 0.75rem 1rem; border-radius: 12px; border: 1px solid var(--border-paper);">
+              <strong style="color: var(--iris);">Senior KG</strong><br>
+              <span style="font-size: 0.85rem; color: var(--text-muted);">08:00 AM – 12:30 PM</span>
             </div>
           </div>
         </div>
       </div>
-      <div class="col-lg-12 who-we-are-content" style="margin-top: 40px;">
-        <div class="management_msg" style="text-align: right;">
-          <h5 class="text-right mr_btm">Mrs. Komal Shah</h5>
-          <h6 class="text-right mr_btm">(+91) 99044 15333</h6>
-          <h6 class="text-right mr_btm">Principal - Seven Steps Pre-School</h6>
-        </div>
+    </div>
+
+    <!-- Guidelines Cards -->
+    <div class="facilities-mosaic-grid">
+      <div class="facility-explorer-card reveal-pop">
+        <h3 style="color: var(--saffron);"><i class="fas fa-tshirt"></i> Uniform & Grooming</h3>
+        <p>Children must attend school in clean, prescribed school uniform with school ID card and comfortable footwear. Personal cleanliness and nail trimming are checked regularly.</p>
+      </div>
+      <div class="facility-explorer-card reveal-pop">
+        <h3 style="color: var(--mint);"><i class="fas fa-calendar-check"></i> Attendance & Leaves</h3>
+        <p>Regular attendance is mandatory. In case of illness or unforeseen absence, parents must submit a leave application or medical certificate promptly to the class teacher.</p>
+      </div>
+      <div class="facility-explorer-card reveal-pop">
+        <h3 style="color: var(--honey-dark);"><i class="fas fa-utensils"></i> Healthy Tiffin Policy</h3>
+        <p>Only nutritious, wholesome homemade meals are encouraged in tiffin. Junk food, chocolates, and aerated drinks are strictly prohibited on school premises.</p>
       </div>
     </div>
   </div>
-
-  <div class="who-we-are-shape">
-    <img src="{{asset('assets/img/boy2.png')}}" alt="boy2">
-  </div>
 </section>
-<!-- End Who We Are Area -->
-
-
-@include('includes.cat-area')
-
-<!-- class area start here -->
-@include('includes.admission-step')
-<!-- class area end here -->
 
 @endsection

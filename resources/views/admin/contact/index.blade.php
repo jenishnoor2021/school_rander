@@ -26,9 +26,9 @@
                      <thead class="bg-primary">
                         <tr>
                            <th>Action</th>
-                           <th>Username</th>
+                           <th>Name</th>
                            <th>Email</th>
-                           <th>Phone no</th>
+                           <th>Phone No</th>
                            <th>Message</th>
                            <th>Date</th>
                         </tr>

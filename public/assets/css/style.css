@@ -2242,3 +2242,283 @@ button, input, select, textarea {
   grid-template-columns: repeat(auto-fit, minmax(min(100%, 340px), 1fr));
   gap: 2.25rem;
 }
+
+/* --------------------------------------------------------------------------
+   FORM SUBMISSION FEEDBACK, VALIDATION & LOADER STYLES
+   -------------------------------------------------------------------------- */
+.form-alert-box {
+  margin-bottom: 1.5rem;
+}
+
+.form-alert {
+  padding: 1rem 1.35rem;
+  border-radius: 16px;
+  font-family: var(--font-body);
+  font-size: 0.95rem;
+  line-height: 1.55;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.85rem;
+  box-shadow: var(--shadow-paper-sm);
+  animation: slideInDownAlert 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+  position: relative;
+}
+
+@keyframes slideInDownAlert {
+  from {
+    opacity: 0;
+    transform: translateY(-12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-alert i.alert-icon {
+  font-size: 1.3rem;
+  margin-top: 0.1rem;
+  flex-shrink: 0;
+}
+
+.form-alert-content {
+  flex: 1;
+}
+
+.form-alert-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+.form-alert-close {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.2s;
+  padding: 0 0.25rem;
+}
+
+.form-alert-close:hover {
+  opacity: 1;
+}
+
+.form-alert-success {
+  background: #ecfdf5;
+  color: #065f46;
+  border: 2px solid #a7f3d0;
+}
+
+.form-alert-success i.alert-icon {
+  color: #10b981;
+}
+
+.form-alert-error, .form-alert-danger {
+  background: #fff1f2;
+  color: #9f1239;
+  border: 2px solid #fecdd3;
+}
+
+.form-alert-error i.alert-icon, .form-alert-danger i.alert-icon {
+  color: #f43f5e;
+}
+
+/* Field-level error messages */
+.form-field-error {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+  color: #e11d48;
+  font-size: 0.82rem;
+  font-weight: 600;
+  margin-top: 0.35rem;
+  animation: fadeInFieldError 0.25s ease;
+}
+
+@keyframes fadeInFieldError {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.form-input-styled.is-invalid {
+  border-color: #f43f5e !important;
+  background-color: #fff8f8 !important;
+  box-shadow: 0 0 0 3px rgba(244, 63, 94, 0.18) !important;
+}
+
+/* Button Loading State */
+.btn-wonder.btn-loading {
+  opacity: 0.85 !important;
+  pointer-events: none !important;
+  cursor: not-allowed !important;
+  position: relative;
+  padding-left: 2.75rem !important;
+  transform: none !important;
+  box-shadow: none !important;
+}
+
+.btn-wonder.btn-loading .btn-spinner {
+  display: inline-block;
+  position: absolute;
+  left: 1.25rem;
+  top: 50%;
+  transform: translateY(-50%);
+  animation: fa-spin 1s infinite linear;
+}
+
+.file-input-help-text {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.35rem;
+}
+
+/* --------------------------------------------------------------------------
+   HOMEPAGE ANNOUNCEMENT POPUP MODAL (FIXED OVERLAY)
+   -------------------------------------------------------------------------- */
+.home-popup-overlay {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(15, 23, 42, 0.78);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 999999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.25rem;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.35s cubic-bezier(0.16, 1, 0.3, 1), visibility 0.35s ease;
+}
+
+.home-popup-overlay.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+.home-popup-container {
+  position: relative;
+  background: #ffffff;
+  border-radius: 26px;
+  max-width: 580px;
+  width: 100%;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 30px 80px -15px rgba(0, 0, 0, 0.5), 0 0 0 1px rgba(255, 255, 255, 0.2);
+  transform: scale(0.92) translateY(20px);
+  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.home-popup-overlay.show .home-popup-container {
+  transform: scale(1) translateY(0);
+}
+
+/* Floating Circular Close Button */
+.home-popup-close-btn {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(15, 23, 42, 0.85);
+  color: #ffffff;
+  border: 2px solid #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  z-index: 20;
+  font-size: 1.1rem;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+}
+
+.home-popup-close-btn:hover {
+  background: var(--berry);
+  transform: rotate(90deg) scale(1.08);
+}
+
+/* Media/Image Container */
+.home-popup-media {
+  overflow-y: auto;
+  max-height: calc(88vh - 80px);
+  background: #0f3460;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.home-popup-media a {
+  display: block;
+  width: 100%;
+  text-decoration: none;
+}
+
+.home-popup-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  object-fit: contain;
+}
+
+/* Footer Action Bar */
+.home-popup-action {
+  padding: 1rem 1.5rem;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  border-top: 1px solid var(--border-paper);
+}
+
+.home-popup-btn {
+  padding: 0.75rem 1.85rem;
+  font-size: 0.98rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.home-popup-dismiss-text {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.88rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0.5rem;
+  transition: color 0.2s;
+  font-family: var(--font-body);
+}
+
+.home-popup-dismiss-text:hover {
+  color: var(--navy);
+  text-decoration: underline;
+}
+
+@media (max-width: 600px) {
+  .home-popup-container {
+    max-width: 94vw;
+    border-radius: 20px;
+  }
+  .home-popup-action {
+    flex-direction: column;
+    gap: 0.6rem;
+    padding: 0.85rem 1rem;
+  }
+  .home-popup-btn {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+

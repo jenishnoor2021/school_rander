@@ -18,9 +18,6 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/data_get',[App\Http\Controllers\ApiLinksController::class, 'showdata'])->name('show');
-
-
 Route::fallback(function () {
-    return Response::json(["error" => "Unauthorize access"], 404);
-    });
+    return response()->json(["error" => "Unauthorize access"], 404);
+});

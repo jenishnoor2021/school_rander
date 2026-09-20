@@ -27,7 +27,7 @@
       <div class="row align-items-center">
          <div class="col-lg-6">
             <div class="who-we-are-image">
-               <img src="{{asset('assets/img/coodignatornew.jpg')}}" alt="image" class="management_img">
+               <img src="{{ asset('assets/img/coordinator.jpg') }}" alt="Academic coordinator" class="management_img">
             </div>
          </div>
          <div class="col-lg-6">
@@ -50,7 +50,7 @@
    </div>
 
    <div class="who-we-are-shape">
-      <img src="{{asset('assets/img/boy1.png')}}" alt="boy1">
+      <img src="{{ asset('assets/img/hero_child.png') }}" alt="Students at Seven Steps Pre-School">
    </div>
 </section>
 <!-- End Who We Are Area -->

@@ -19,6 +19,7 @@
             <div class="box box-primary">
                <div class="box-header">
                   <h3 class="box-title">Edit Activities</h3>
+                  <a href="{{ $backUrl }}" class="btn btn-default btn-sm pull-right"><i class="fa fa-arrow-left"></i> Back to items</a>
                </div>
                <div class="box-body">
                   <!-- Horizontal Form -->
@@ -30,15 +31,14 @@
                      <!-- form start -->
                      {!! Form::model($activity, ['method'=>'PATCH', 'action'=> ['AdminActivitysController@update', $activity->id],'files'=>true,'class'=>'form-horizontal','name'=>'editactivityform']) !!}
                      @csrf
+                     <input type="hidden" name="return_url" value="{{ $backUrl }}">
                      <div class="box-body">
                         <div class="form-group">
                            <label for="category" class="col-sm-2 control-label">Category</label>
                            <div class="col-sm-10">
-                              <select name="category" id="category" class="custom-select" style="width:100%" required>
+                              <select name="category_id" id="category" class="custom-select" style="width:100%" required>
                                  <option value="">Select Category</option>
-                                 <option value="celebration" {{ $activity->category == 'celebration' ? 'selected' : '' }}>Celebration</option>
-                                 <option value="competition" {{ $activity->category == 'competition' ? 'selected' : '' }}>Competition</option>
-                                 <option value="club" {{ $activity->category == 'club' ? 'selected' : '' }}>Club</option>
+                                 @foreach($categories as $category)<option value="{{ $category->id }}" {{ $activity->category_id == $category->id ? 'selected' : '' }}>{{ $category->name }}</option>@endforeach
                               </select>
                               @if($errors->has('category'))
                               <div class="error text-danger">{{ $errors->first('category') }}</div>
@@ -55,8 +55,8 @@
                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="text" class="col-sm-2 control-label"></label>
-                        <img height="100px" src="{{$activity->file ? $activity->file : 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png'}}" alt="" >
+                           <label for="text" class="col-sm-2 control-label"></label>
+                           <img height="100px" src="{{$activity->file ? $activity->file : 'https://eitrawmaterials.eu/wp-content/uploads/2016/09/person-icon.png'}}" alt="">
                         </div>
                         <div class="form-group">
                            <label for="file" class="col-sm-2 control-label">Image</label>
@@ -68,8 +68,8 @@
                            </div>
                         </div>
                         <div class="form-group">
-                            <label for="text" class="col-sm-2 control-label"></label>
-                        <img id="blah_acti" src="#" alt="your image" style="display:none;max-height: 200px;width:250px" />
+                           <label for="text" class="col-sm-2 control-label"></label>
+                           <img id="blah_acti" src="#" alt="your image" style="display:none;max-height: 200px;width:250px" />
                         </div>
 
                         <div class="form-group">
@@ -96,31 +96,30 @@
 
 @section('script')
 <script>
-        $(function() {
+   $(function() {
 
-         $("form[name='editactivityform']").validate({
-                rules: {
-                  category:{
-                     required: true,
-                  },
-                  text:{
-                     required: true,
-                  },
-                },
-                submitHandler: function(form) {
-                    form.submit();
-                }
-            });
+      $("form[name='editactivityform']").validate({
+         rules: {
+            category: {
+               required: true,
+            },
+            text: {
+               required: true,
+            },
+         },
+         submitHandler: function(form) {
+            form.submit();
+         }
       });
+   });
 
-      $("#file").change(function () {
-        let reader = new FileReader();
-        reader.onload = (e) => {
-            $("#blah_acti").attr("src", e.target.result);
-        };
-        reader.readAsDataURL(this.files[0]);
-        $("#blah_acti").css("display", "block");
-    });
-
+   $("#file").change(function() {
+      let reader = new FileReader();
+      reader.onload = (e) => {
+         $("#blah_acti").attr("src", e.target.result);
+      };
+      reader.readAsDataURL(this.files[0]);
+      $("#blah_acti").css("display", "block");
+   });
 </script>
 @endsection

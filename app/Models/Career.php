@@ -28,9 +28,12 @@ class Career extends Model
         parent::boot();
 
         static::created(function ($item) {
-
-            $adminEmail = "sspreschool77@gmail.com";
-            Mail::to($adminEmail)->send(new CareerMail($item));
+            try {
+                $adminEmail = "sspreschool77@gmail.com";
+                Mail::to($adminEmail)->send(new CareerMail($item));
+            } catch (\Throwable $e) {
+                \Illuminate\Support\Facades\Log::error('Career notification mail failed: ' . $e->getMessage());
+            }
         });
     }
 }
