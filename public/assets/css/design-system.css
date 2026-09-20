@@ -1,0 +1,375 @@
+/* ==========================================================================
+   SEVEN STEPS PRE-SCHOOL - THE WONDER CANVAS DESIGN SYSTEM
+   Modern Scandinavian/Montessori Aesthetic + Storybook Adventure + High Impact
+   ========================================================================== */
+
+@import url('https://fonts.googleapis.com/css2?family=Caveat:wght@600;700&family=Fredoka:wght@400;500;600;700&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,400;1,600&display=swap');
+
+:root {
+  /* --------------------------------------------------------------------------
+     Brand Color Harmonies (Warm, Playful, Trustworthy, Premium)
+     -------------------------------------------------------------------------- */
+  --saffron: #ff7a45;
+  --saffron-light: #ff9f43;
+  --saffron-dark: #e05d28;
+  --saffron-gradient: linear-gradient(135deg, #ff7a45 0%, #ff9f43 100%);
+  --saffron-glow: rgba(255, 122, 69, 0.28);
+
+  --navy: #0f3460;
+  --navy-dark: #081d38;
+  --navy-light: #1b497e;
+  --navy-gradient: linear-gradient(135deg, #0f3460 0%, #1b497e 100%);
+  --navy-glow: rgba(15, 52, 96, 0.25);
+
+  --mint: #10b981;
+  --mint-light: #34d399;
+  --mint-dark: #059669;
+  --mint-gradient: linear-gradient(135deg, #10b981 0%, #34d399 100%);
+  --mint-glow: rgba(16, 185, 129, 0.28);
+
+  --honey: #f59e0b;
+  --honey-light: #fbbf24;
+  --honey-dark: #d97706;
+  --honey-gradient: linear-gradient(135deg, #f59e0b 0%, #fbbf24 100%);
+  --honey-glow: rgba(245, 158, 11, 0.28);
+
+  --berry: #f43f5e;
+  --berry-light: #fb7185;
+  --berry-dark: #e11d48;
+  --berry-gradient: linear-gradient(135deg, #f43f5e 0%, #fb7185 100%);
+  --berry-glow: rgba(244, 63, 94, 0.28);
+
+  --iris: #6366f1;
+  --iris-light: #818cf8;
+  --iris-dark: #4f46e5;
+  --iris-gradient: linear-gradient(135deg, #6366f1 0%, #8b5cf6 100%);
+  --iris-glow: rgba(99, 102, 241, 0.28);
+
+  --sky: #0284c7;
+  --sky-light: #38bdf8;
+  --sky-gradient: linear-gradient(135deg, #0284c7 0%, #38bdf8 100%);
+
+  /* Warm Storybook Canvas Backgrounds */
+  --bg-canvas: #fffaf5;
+  --bg-canvas-alt: #fdf5ea;
+  --bg-canvas-subtle: #fcf8f2;
+  --bg-card: #ffffff;
+  --bg-card-tint: #fff8f2;
+
+  --bg-pill-saffron: #fff2ec;
+  --bg-pill-mint: #ecfdf5;
+  --bg-pill-honey: #fffbeb;
+  --bg-pill-berry: #fff1f2;
+  --bg-pill-iris: #f5f3ff;
+  --bg-pill-sky: #f0f9ff;
+
+  /* Typography Colors */
+  --text-heading: #0f3460;
+  --text-body: #334155;
+  --text-muted: #64748b;
+  --text-light: #94a3b8;
+  --border-paper: #f0e6da;
+  --border-subtle: #e8dccf;
+
+  /* Typography Stack */
+  --font-display: 'Fredoka', cursive, sans-serif;
+  --font-handwritten: 'Caveat', cursive, sans-serif;
+  --font-body: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* Paper-Cut Tactile Shadows */
+  --shadow-paper-xs: 0 2px 6px rgba(15, 52, 96, 0.04);
+  --shadow-paper-sm: 0 4px 14px rgba(15, 52, 96, 0.06), 0 1px 3px rgba(15, 52, 96, 0.04);
+  --shadow-paper-md: 0 10px 28px rgba(15, 52, 96, 0.08), 0 2px 8px rgba(15, 52, 96, 0.04);
+  --shadow-paper-lg: 0 20px 48px rgba(15, 52, 96, 0.12), 0 4px 14px rgba(15, 52, 96, 0.06);
+  --shadow-paper-hover: 0 24px 56px rgba(15, 52, 96, 0.16), 0 6px 18px rgba(15, 52, 96, 0.08);
+
+  /* Organic Shapes & Radii */
+  --radius-organic-1: 36px 14px 36px 14px / 14px 36px 14px 36px;
+  --radius-organic-2: 24px 36px 20px 32px / 32px 20px 36px 24px;
+  --radius-organic-card: 28px 16px 28px 16px;
+  --radius-arch: 140px 140px 24px 24px;
+  --radius-pill: 9999px;
+  --radius-sm: 12px;
+  --radius-md: 20px;
+  --radius-lg: 32px;
+
+  /* Animation Physics */
+  --spring-bounce: all 0.45s cubic-bezier(0.34, 1.56, 0.64, 1);
+  --ease-soft: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+/* --------------------------------------------------------------------------
+   Page Preloader Animation
+   -------------------------------------------------------------------------- */
+.page-preloader {
+  position: fixed;
+  inset: 0;
+  background: #fffaf5;
+  z-index: 99999;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, visibility 0.5s ease;
+}
+
+.page-preloader.fade-out {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.preloader-pencil {
+  width: 64px;
+  height: 64px;
+  animation: bouncePencil 1.2s infinite ease-in-out;
+}
+
+.preloader-pencil svg {
+  width: 100%;
+  height: 100%;
+}
+
+.preloader-text {
+  font-family: var(--font-display);
+  font-size: 1.15rem;
+  color: var(--navy);
+  margin-top: 1rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.preloader-dots span {
+  animation: blinkDots 1.4s infinite;
+  opacity: 0;
+}
+.preloader-dots span:nth-child(1) { animation-delay: 0.2s; }
+.preloader-dots span:nth-child(2) { animation-delay: 0.4s; }
+.preloader-dots span:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes bouncePencil {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-16px) rotate(12deg); }
+}
+
+@keyframes blinkDots {
+  0%, 20% { opacity: 0; }
+  50% { opacity: 1; }
+  100% { opacity: 0; }
+}
+
+/* --------------------------------------------------------------------------
+   Keyframe Animations for Wonder Canvas
+   -------------------------------------------------------------------------- */
+@keyframes floatSlow {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(-12px) rotate(2deg); }
+}
+
+@keyframes floatReverse {
+  0%, 100% { transform: translateY(0) rotate(0deg); }
+  50% { transform: translateY(10px) rotate(-2deg); }
+}
+
+@keyframes rotateSun {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes flyPlane {
+  0%, 100% { transform: translate(0, 0) rotate(0deg); }
+  50% { transform: translate(14px, -12px) rotate(4deg); }
+}
+
+@keyframes stickerWiggle {
+  0%, 100% { transform: rotate(0deg) scale(1); }
+  25% { transform: rotate(-4deg) scale(1.04); }
+  75% { transform: rotate(4deg) scale(1.04); }
+}
+
+@keyframes pulseHalo {
+  0%, 100% { transform: scale(1); opacity: 0.4; }
+  50% { transform: scale(1.08); opacity: 0.7; }
+}
+
+@keyframes cloudDrift {
+  0% { transform: translateX(-10px); }
+  50% { transform: translateX(10px); }
+  100% { transform: translateX(-10px); }
+}
+
+@keyframes blobMorph {
+  0%, 100% { border-radius: 42% 58% 70% 30% / 45% 45% 55% 55%; }
+  33% { border-radius: 70% 30% 46% 54% / 30% 69% 31% 70%; }
+  66% { border-radius: 38% 62% 35% 65% / 60% 38% 62% 40%; }
+}
+
+@keyframes stampEntrance {
+  0% { transform: scale(2.2) rotate(-25deg); opacity: 0; }
+  70% { transform: scale(0.95) rotate(-3deg); opacity: 1; }
+  100% { transform: scale(1) rotate(-4deg); opacity: 1; }
+}
+
+@keyframes shimmerLight {
+  0% { transform: translateX(-100%) rotate(25deg); }
+  100% { transform: translateX(200%) rotate(25deg); }
+}
+
+/* --------------------------------------------------------------------------
+   Storybook Doodle Objects
+   -------------------------------------------------------------------------- */
+.doodle-element {
+  position: absolute;
+  pointer-events: none;
+  z-index: 1;
+}
+
+.doodle-sun {
+  animation: rotateSun 35s linear infinite;
+}
+
+.doodle-cloud {
+  animation: cloudDrift 8s ease-in-out infinite;
+}
+
+.doodle-plane {
+  animation: flyPlane 6s ease-in-out infinite;
+}
+
+.doodle-star {
+  animation: floatSlow 5s ease-in-out infinite;
+}
+
+.doodle-block {
+  animation: floatReverse 6s ease-in-out infinite;
+}
+
+/* --------------------------------------------------------------------------
+   Tactile Scrapbook & Paper Craft Badges
+   -------------------------------------------------------------------------- */
+.washi-tape {
+  position: absolute;
+  top: -10px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-2deg);
+  width: 90px;
+  height: 24px;
+  background: rgba(255, 230, 200, 0.75);
+  backdrop-filter: blur(4px);
+  border: 1px dashed rgba(255, 122, 69, 0.4);
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.washi-tape.right {
+  top: -8px;
+  right: 20px;
+  left: auto;
+  transform: rotate(3deg);
+  background: rgba(220, 252, 231, 0.75);
+  border-color: rgba(16, 185, 129, 0.4);
+}
+
+.washi-tape.left {
+  top: -8px;
+  left: 20px;
+  transform: rotate(-4deg);
+  background: rgba(254, 226, 226, 0.75);
+  border-color: rgba(244, 63, 94, 0.4);
+}
+
+/* Official Teacher / School Seal Stamp */
+.stamp-seal {
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  border: 3px dashed var(--saffron);
+  background: #fff8f3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  transform: rotate(-6deg);
+  box-shadow: var(--shadow-paper-sm);
+  color: var(--saffron);
+  font-family: var(--font-display);
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  position: absolute;
+  z-index: 4;
+}
+
+.stamp-seal i {
+  font-size: 1.25rem;
+  margin-bottom: 2px;
+}
+
+/* --------------------------------------------------------------------------
+   Storybook Section Wave Dividers
+   -------------------------------------------------------------------------- */
+.storybook-wave {
+  width: 100%;
+  overflow: hidden;
+  line-height: 0;
+  position: relative;
+  z-index: 2;
+}
+
+.storybook-wave svg {
+  display: block;
+  width: 100%;
+  height: 48px;
+}
+
+.storybook-wave.wave-cream path {
+  fill: var(--bg-canvas);
+}
+
+.storybook-wave.wave-white path {
+  fill: #ffffff;
+}
+
+.storybook-wave.wave-alt path {
+  fill: var(--bg-canvas-alt);
+}
+
+.storybook-wave.wave-navy path {
+  fill: var(--navy);
+}
+
+/* --------------------------------------------------------------------------
+   Handwritten Notes & Callouts
+   -------------------------------------------------------------------------- */
+.handwritten-badge {
+  font-family: var(--font-handwritten);
+  font-size: 1.28rem;
+  color: var(--saffron);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  font-weight: 700;
+}
+
+.handwritten-badge.c-mint { color: var(--mint); }
+.handwritten-badge.c-honey { color: var(--honey-dark); }
+.handwritten-badge.c-berry { color: var(--berry); }
+.handwritten-badge.c-iris { color: var(--iris); }
+
+/* --------------------------------------------------------------------------
+   Reduced Motion Accessibility
+   -------------------------------------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

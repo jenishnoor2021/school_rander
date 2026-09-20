@@ -1,0 +1,102 @@
+[09-Jan-2024 20:05:48 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php on line 18
+[11-Jan-2024 23:31:39 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php on line 18
+[16-Jan-2024 20:48:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php on line 18
+[31-Jan-2024 20:56:59 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php on line 18
+[08-Feb-2024 23:37:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php on line 18
+[21-Mar-2024 15:15:55 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php on line 18
+[21-Mar-2024 19:01:57 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php on line 18
+[18-May-2024 13:58:06 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/database.php on line 18
+[18-May-2024 23:53:07 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/database.php on line 18
+[22-May-2024 06:55:17 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/database.php on line 18
+[05-Jun-2024 03:18:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/cache.php on line 18
+[20-Oct-2024 16:13:41 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/database.php on line 18
+[25-Mar-2025 04:27:10 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php on line 16
+[25-Mar-2025 04:27:11 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php on line 16
+[28-Mar-2025 03:15:24 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php on line 16
+[28-Mar-2025 03:15:25 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php on line 16
+[04-Apr-2025 01:53:18 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php on line 16
+[05-Apr-2025 11:52:13 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/app.php on line 16
+[05-Apr-2025 11:52:14 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/database.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/database.php on line 18
+[24-May-2025 08:20:31 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[24-May-2025 08:20:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function resource_path() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/view.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/view.php on line 17
+[24-May-2025 08:20:31 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[24-May-2025 08:20:31 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/session.php:21
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/session.php on line 21
+[24-May-2025 08:20:32 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[24-May-2025 08:20:32 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[24-May-2025 08:20:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/services.php:18
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/services.php on line 18
+[24-May-2025 08:20:32 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[24-May-2025 08:20:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/filesystems.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/filesystems.php on line 16
+[24-May-2025 08:20:32 UTC] PHP Deprecated:  Directive 'allow_url_include' is deprecated in Unknown on line 0
+[24-May-2025 08:20:32 UTC] PHP Fatal error:  Uncaught Error: Call to undefined function env() in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/mail.php:16
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/config/mail.php on line 16

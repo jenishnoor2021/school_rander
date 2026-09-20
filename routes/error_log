@@ -1,0 +1,8 @@
+[05-Apr-2025 11:52:14 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/sevenstepsschool/public_html/sevenstepsschool.com/routes/web.php:32
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/routes/web.php on line 32
+[05-Apr-2025 11:52:14 UTC] PHP Fatal error:  Uncaught Error: Class "Illuminate\Support\Facades\Route" not found in /home/sevenstepsschool/public_html/sevenstepsschool.com/routes/api.php:17
+Stack trace:
+#0 {main}
+  thrown in /home/sevenstepsschool/public_html/sevenstepsschool.com/routes/api.php on line 17
