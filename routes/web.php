@@ -155,6 +155,7 @@ Route::group(['middleware' => ['auth', 'usersession']], function () {
     Route::get('admin/brocher/edit/{id}', [AdminBrocherController::class, 'edit'])->name('admin.brocher.edit');
     Route::patch('admin/brocher/update/{id}', [AdminBrocherController::class, 'update'])->name('admin.brocher.update');
     Route::get('admin/brocher/destroy/{id}', [AdminBrocherController::class, 'destroy'])->name('admin.brocher.destroy');
+    Route::delete('/mybrocherDeleteAll', [AdminBrocherController::class, 'deleteBrocherAll'])->name('deletebrocherAll');
 
     Route::get('admin/contact', [AdminContactController::class, 'index'])->name('admin.contact');
     Route::get('admin/contact/create', [AdminContactController::class, 'create'])->name('admin.contact.create');
@@ -170,6 +171,7 @@ Route::group(['middleware' => ['auth', 'usersession']], function () {
     Route::get('admin/enquirey/edit/{id}', [AdminEnquireyController::class, 'edit'])->name('admin.enquirey.edit');
     Route::patch('admin/enquirey/update/{id}', [AdminEnquireyController::class, 'update'])->name('admin.enquirey.update');
     Route::get('admin/enquirey/destroy/{id}', [AdminEnquireyController::class, 'destroy'])->name('admin.enquirey.destroy');
+    Route::delete('/myenquireyDeleteAll', [AdminEnquireyController::class, 'deleteEnquireyAll'])->name('deleteenquireyAll');
 
     Route::get('admin/career', [AdminCareersController::class, 'index'])->name('admin.career');
     Route::get('admin/career/create', [AdminCareersController::class, 'create'])->name('admin.career.create');
@@ -177,6 +179,7 @@ Route::group(['middleware' => ['auth', 'usersession']], function () {
     Route::get('admin/career/edit/{id}', [AdminCareersController::class, 'edit'])->name('admin.career.edit');
     Route::patch('admin/career/update/{id}', [AdminCareersController::class, 'update'])->name('admin.career.update');
     Route::get('admin/career/destroy/{id}', [AdminCareersController::class, 'destroy'])->name('admin.career.destroy');
+    Route::delete('/mycareerDeleteAll', [AdminCareersController::class, 'deleteCareerAll'])->name('deletecareerAll');
 
     Route::get("admin/achivement", [AdminAchivementController::class, 'index'])->name('admin.achivement.index');
     Route::get('admin/achivement/create', [AdminAchivementController::class, 'create'])->name('admin.achivement.create');
@@ -207,6 +210,7 @@ Route::group(['middleware' => ['auth', 'usersession']], function () {
     Route::get('admin/popup/edit/{id}', [AdminPopupsController::class, 'edit'])->name('admin.popup.edit');
     Route::patch('admin/popup/update/{id}', [AdminPopupsController::class, 'update'])->name('admin.popup.update');
     Route::get('admin/popup/destroy/{id}', [AdminPopupsController::class, 'destroy'])->name('admin.popup.destroy');
+    Route::delete('/mypopupDeleteAll', [AdminPopupsController::class, 'deletePopupAll'])->name('deletepopupAll');
     Route::get("admin/popup/active/{id}", [AdminPopupsController::class, 'popupActive'])->name('admin.popup.active');
 
     Route::get('admin/{type}/categories', [AdminCategoryController::class, 'index'])->name('admin.categories.index');

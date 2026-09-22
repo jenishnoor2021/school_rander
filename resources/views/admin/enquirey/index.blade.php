@@ -17,33 +17,39 @@
       <div class="row">
          <div class="col-xs-12">
             <div class="box">
-               <div class="box-header">
-                  <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
-               </div>
-               <!-- /.box-header -->
-               <div class="box-body" style="overflow-x:auto;margin-top:15px">
-                  <table id="enquirytable" class="table table-bordered table-striped">
-                     <thead class="bg-primary">
-                        <tr>
-                           <th>Action</th>
-                           <th>Child Name</th>
-                           <th>Date Of Birth</th>
-                           <th>Email</th>
-                           <th>Phone No</th>
-                           <th>Grade / Class</th>
-                           <th>Residential Address</th>
-                           <th>Preferred Campus</th>
-                           <th>Gender</th>
-                           <th>Preferred Shift</th>
-                           <th>Father / Guardian</th>
-                           <th>Date</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        @foreach($enquireys as $enquirey)
-                        <tr id="tr_{{$enquirey->id}}">
-                           <!-- <td><input type="checkbox" class="sub_chk" data-id="{{$enquirey->id}}"></td> -->
-                           <td>
+                <div class="box-header">
+                   <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
+                </div>
+                <div class="row" style="margin-left: 5px; margin-bottom: 10px;">
+                   <div class="col-md-9">
+                      <button class="btn btn-danger text-white delete_all" data-url="{{ url('myenquireyDeleteAll') }}"><i class="fa fa-trash"></i> Delete Selected</button>
+                   </div>
+                </div>
+                <!-- /.box-header -->
+                <div class="box-body" style="overflow-x:auto;margin-top:15px">
+                   <table id="enquirytable" class="table table-bordered table-striped">
+                      <thead class="bg-primary">
+                         <tr>
+                            <th width="50px"><input type="checkbox" id="master"></th>
+                            <th>Action</th>
+                            <th>Child Name</th>
+                            <th>Date Of Birth</th>
+                            <th>Email</th>
+                            <th>Phone No</th>
+                            <th>Grade / Class</th>
+                            <th>Residential Address</th>
+                            <th>Preferred Campus</th>
+                            <th>Gender</th>
+                            <th>Preferred Shift</th>
+                            <th>Father / Guardian</th>
+                            <th>Date</th>
+                         </tr>
+                      </thead>
+                      <tbody>
+                         @foreach($enquireys as $enquirey)
+                         <tr id="tr_{{$enquirey->id}}">
+                            <td><input type="checkbox" class="sub_chk" data-id="{{$enquirey->id}}"></td>
+                            <td>
                               <a href="{{route('admin.enquirey.destroy', $enquirey->id)}}" onclick="return confirm('Sure ! You want to delete ?');"><i class="fa fa-trash" style="color:white;font-size:15px;background-color:red;padding:8px;border-radius:200px;"></i></a>
                            </td>
                            <td>{{$enquirey->fname}}</td>

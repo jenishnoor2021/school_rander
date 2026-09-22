@@ -72,7 +72,7 @@
             <div class="row">
                <div class="col-md-9">
                   <!-- <a href="{{route('admin.mediagalleryimage.create')}}" class="bg-primary text-white text-decoration-none" style="padding:12px 12px;margin-left:20px"><i class="fa fa-plus editable" style="font-size:15px;">&nbsp;ADD</i></a> -->
-                  <button style="padding:10px 20px;margin-left:10px;" class="btn btn-danger text-white delete_all" data-url="{{ url('mymediagalleryimageDeleteAll') }}">Delete</button>
+                  <button style="padding:8px 16px;margin-left:10px;" class="btn btn-danger text-white delete_all" data-url="{{ url('mymediagalleryimageDeleteAll') }}"><i class="fa fa-trash"></i> Delete Selected</button>
                </div>
             </div>
             <!-- /.box-header -->

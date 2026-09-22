@@ -94,4 +94,37 @@ class AdminEnquireyController extends Controller
         $adslink->delete();
         return redirect('admin/enquirey');
     }
+
+    public function deleteEnquireyAll(Request $request)
+    {
+        $ids = $request->ids;
+        if (is_string($ids)) {
+            $ids = array_filter(explode(',', $ids), 'strlen');
+        }
+        if (empty($ids) || !is_array($ids)) {
+            return response()->json(['error' => 'Please select at least one record to delete.'], 422);
+        }
+
+        try {
+            \Illuminate\Support\Facades\DB::beginTransaction();
+            $deletedCount = 0;
+            foreach ($ids as $id) {
+                $i = Enquirey::find($id);
+                if ($i) {
+                    $i->delete();
+                    $deletedCount++;
+                }
+            }
+            \Illuminate\Support\Facades\DB::commit();
+
+            if ($deletedCount === 0) {
+                return response()->json(['error' => 'No matching records found to delete.'], 404);
+            }
+
+            return response()->json(['success' => 'Selected records have been deleted successfully.']);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\DB::rollBack();
+            return response()->json(['error' => 'An error occurred while deleting: ' . $e->getMessage()], 500);
+        }
+    }
 }

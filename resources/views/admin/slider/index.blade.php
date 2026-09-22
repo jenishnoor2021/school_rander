@@ -63,7 +63,7 @@
                </div>
                <div class="row">
                   <div class="col-md-9">
-                     <button style="padding:10px 20px;margin-left:10px;" class="btn btn-danger text-white delete_all" data-url="{{ url('mysliderDeleteAll') }}">Delete</button>
+                     <button style="padding:8px 16px;margin-left:10px;" class="btn btn-danger text-white delete_all" data-url="{{ url('mysliderDeleteAll') }}"><i class="fa fa-trash"></i> Delete Selected</button>
                   </div>
                </div>
                <!-- /.box-header -->

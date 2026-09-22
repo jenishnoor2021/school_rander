@@ -71,7 +71,7 @@
                </div>
                <div class="row">
                   <div class="col-md-9">
-
+                     <button style="padding:8px 16px;margin-left:10px;" class="btn btn-danger text-white delete_all" data-url="{{ url('mypopupDeleteAll') }}"><i class="fa fa-trash"></i> Delete Selected</button>
                   </div>
                </div>
                <!-- /.box-header -->
@@ -79,7 +79,7 @@
                   <table id="example1" class="table table-bordered table-striped">
                      <thead class="bg-primary">
                         <tr>
-                           <!-- <th width="50px"><input type="checkbox" id="master"></th> -->
+                           <th width="50px"><input type="checkbox" id="master"></th>
                            <th>Action</th>
                            <th>popup Image</th>
                            <th>Show</th>
@@ -88,7 +88,7 @@
                      <tbody>
                         @foreach($popups as $popup)
                         <tr id="tr_{{$popup->id}}">
-                           <!-- <td><input type="checkbox" class="sub_chk" data-id="{{$popup->id}}"></td> -->
+                           <td><input type="checkbox" class="sub_chk" data-id="{{$popup->id}}"></td>
                            <td>
                                <a href="{{route('admin.popup.edit', $popup->id)}}"><i class="fa fa-edit" style="color:white;font-size:15px;background-color:#0275d8;padding:8px;border-radius:200px;"></i></a>
                               <a href="{{route('admin.popup.destroy', $popup->id)}}" onclick="return confirm('Sure ! You want to delete ?');"><i class="fa fa-trash" style="color:white;font-size:15px;background-color:red;padding:8px;border-radius:200px;"></i></a>

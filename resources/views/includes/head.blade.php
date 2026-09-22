@@ -15,5 +15,5 @@
 
 <!-- Stylesheets -->
 <link rel="stylesheet" href="{{ asset('assets/css/design-system.css') }}">
-<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}">
+<link rel="stylesheet" href="{{ asset('assets/css/style.css') }}?v={{ file_exists(public_path('assets/css/style.css')) ? filemtime(public_path('assets/css/style.css')) : time() }}">
 <link rel="stylesheet" href="{{ asset('assets/css/responsive.css') }}">

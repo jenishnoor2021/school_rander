@@ -12,9 +12,9 @@ use Illuminate\Support\Str;
 class AdminCategoryController extends Controller
 {
   private $types = [
-    'achievement' => ['label' => 'Achievements', 'model' => Achivement::class, 'store' => 'admin.achivement.store', 'edit' => 'admin.achivement.edit', 'destroy' => 'admin.achivement.destroy', 'folder' => 'achivement'],
-    'activity' => ['label' => 'Activities', 'model' => Activity::class, 'store' => 'admin.activity.store', 'edit' => 'admin.activitycategory.edit', 'destroy' => 'admin.activitycategory.destroy', 'folder' => 'activity'],
-    'event' => ['label' => 'Events', 'model' => Event::class, 'store' => 'admin.event.store', 'edit' => 'admin.event.edit', 'destroy' => 'admin.event.destroy', 'folder' => 'event'],
+    'achievement' => ['label' => 'Achievements', 'model' => Achivement::class, 'store' => 'admin.achivement.store', 'edit' => 'admin.achivement.edit', 'destroy' => 'admin.achivement.destroy', 'folder' => 'achivement', 'deleteAll' => 'deleteachivementAll'],
+    'activity' => ['label' => 'Activities', 'model' => Activity::class, 'store' => 'admin.activity.store', 'edit' => 'admin.activitycategory.edit', 'destroy' => 'admin.activitycategory.destroy', 'folder' => 'activity', 'deleteAll' => 'deleteactivitycategoryAll'],
+    'event' => ['label' => 'Events', 'model' => Event::class, 'store' => 'admin.event.store', 'edit' => 'admin.event.edit', 'destroy' => 'admin.event.destroy', 'folder' => 'event', 'deleteAll' => 'deleteeventAll'],
   ];
 
   public function index(Request $request, $type)

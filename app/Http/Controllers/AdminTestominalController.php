@@ -191,4 +191,40 @@ class AdminTestominalController extends Controller
         $token->save();
         return Redirect::back();
     }
+
+    public function deleteTestomonialAll(Request $request)
+    {
+        $ids = $request->ids;
+        if (is_string($ids)) {
+            $ids = array_filter(explode(',', $ids), 'strlen');
+        }
+        if (empty($ids) || !is_array($ids)) {
+            return response()->json(['error' => 'Please select at least one record to delete.'], 422);
+        }
+
+        try {
+            \Illuminate\Support\Facades\DB::beginTransaction();
+            $deletedCount = 0;
+            foreach ($ids as $id) {
+                $item = Testomonial::find($id);
+                if ($item) {
+                    if (!empty($item->file) && $item->file !== '/testomonialimg/' && file_exists(public_path($item->file))) {
+                        @unlink(public_path($item->file));
+                    }
+                    $item->delete();
+                    $deletedCount++;
+                }
+            }
+            \Illuminate\Support\Facades\DB::commit();
+
+            if ($deletedCount === 0) {
+                return response()->json(['error' => 'No matching records found to delete.'], 404);
+            }
+
+            return response()->json(['success' => 'Selected records have been deleted successfully.']);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\DB::rollBack();
+            return response()->json(['error' => 'An error occurred while deleting: ' . $e->getMessage()], 500);
+        }
+    }
 }

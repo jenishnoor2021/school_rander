@@ -22,6 +22,10 @@
        folder instead of downloading all of them to reduce the load. -->
   <link rel="stylesheet" href="{{asset('css/skins/_all-skins.min.css')}}">
 
+  <!-- SweetAlert2 -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
   <!-- Google Font -->
   <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
 
@@ -435,96 +439,7 @@
     };
   </script>
 
-  <script type="text/javascript">
-    $.ajaxSetup({
-      headers: {
-        'csrftoken': '{{ csrf_token() }}'
-      }
-    });
-  </script>
 
-  <script type="text/javascript">
-    $(document).ready(function() {
-      $('#master').on('click', function(e) {
-        if ($(this).is(':checked', true)) {
-          $(".sub_chk").prop('checked', true);
-        } else {
-          $(".sub_chk").prop('checked', false);
-        }
-      });
-      $('.delete_all').on('click', function(e) {
-        var allVals = [];
-        $(".sub_chk:checked").each(function() {
-          allVals.push($(this).attr('data-id'));
-        });
-        if (allVals.length <= 0) {
-          alert("Please select row.");
-        } else {
-          var check = confirm("Are you sure you want to delete this row?");
-          if (check == true) {
-            var join_selected_values = allVals.join(",");
-            $.ajax({
-              url: $(this).data('url'),
-              type: 'DELETE',
-              headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
-              data: 'ids=' + join_selected_values,
-              success: function(data) {
-                if (data['success']) {
-                  $(".sub_chk:checked").each(function() {
-                    $(this).parents("tr").remove();
-                  });
-                  alert(data['success']);
-                } else if (data['error']) {
-                  alert(data['error']);
-                } else {
-                  alert('Whoops Something went wrong!!');
-                }
-              },
-              error: function(data) {
-                alert(data.responseText);
-              }
-            });
-            $.each(allVals, function(index, value) {
-              $('table tr').filter("[data-row-id='" + value + "']").remove();
-            });
-          }
-        }
-      });
-      $('[data-toggle=confirmation]').confirmation({
-        rootSelector: '[data-toggle=confirmation]',
-        onConfirm: function(event, element) {
-          element.trigger('confirm');
-        }
-      });
-      $(document).on('confirm', function(e) {
-        var ele = e.target;
-        e.preventDefault();
-        $.ajax({
-          url: ele.href,
-          type: 'DELETE',
-          headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-          },
-          success: function(data) {
-            if (data['success']) {
-              $("#" + data['tr']).slideUp("slow");
-              alert(data['success']);
-            } else if (data['error']) {
-              alert(data['error']);
-            } else {
-              alert('Whoops Something went wrong!!');
-            }
-          },
-          error: function(data) {
-            alert(data.responseText);
-          }
-        });
-        return false;
-      });
-    });
-  </script>
 
   <!-- jQuery 3 -->
   <script src="{{asset('bower_components/jquery/dist/jquery.min.js')}}"></script>
@@ -571,11 +486,212 @@
 
   <script>
     $(document).ready(function() {
-      $("#careertable").DataTable();
-      $("#contacttable").DataTable();
-      $("#enquirytable").DataTable();
-      $("#testomonialtable").DataTable();
+      // Setup CSRF header for all AJAX requests
+      $.ajaxSetup({
+        headers: {
+          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+      });
 
+      // DataTables with non-orderable checkbox first column
+      var dtOptions = {
+        "columnDefs": [
+          { "orderable": false, "targets": 0 }
+        ]
+      };
+
+      if ($("#careertable").length) { $("#careertable").DataTable(dtOptions); }
+      if ($("#contacttable").length) { $("#contacttable").DataTable(dtOptions); }
+      if ($("#enquirytable").length) { $("#enquirytable").DataTable(dtOptions); }
+      if ($("#testomonialtable").length) { $("#testomonialtable").DataTable(dtOptions); }
+
+      // Master Checkbox Toggle (Select All / Deselect All)
+      $(document).on('click', '#master, .master_chk', function(e) {
+        e.stopPropagation();
+        var isChecked = $(this).is(':checked');
+        var table = $(this).closest('table');
+        if (table.length) {
+          table.find('.sub_chk').prop('checked', isChecked);
+        } else {
+          $('.sub_chk').prop('checked', isChecked);
+        }
+      });
+
+      // Individual Checkbox Click - Sync Master Checkbox
+      $(document).on('click', '.sub_chk', function(e) {
+        e.stopPropagation();
+        var table = $(this).closest('table');
+        if (table.length) {
+          var total = table.find('.sub_chk').length;
+          var checked = table.find('.sub_chk:checked').length;
+          table.find('#master, .master_chk').prop('checked', total > 0 && total === checked);
+        } else {
+          var total = $('.sub_chk').length;
+          var checked = $('.sub_chk:checked').length;
+          $('#master, .master_chk').prop('checked', total > 0 && total === checked);
+        }
+      });
+
+      // Bulk Delete Click Handler
+      $(document).on('click', '.delete_all', function(e) {
+        e.preventDefault();
+        var btn = $(this);
+        var url = btn.data('url');
+
+        if (!url) {
+          console.error("Bulk delete URL not defined on button.");
+          return false;
+        }
+
+        var allVals = [];
+        // Scope to closest table container or current page
+        var container = btn.closest('.box, .content, .content-wrapper, body');
+        container.find(".sub_chk:checked").each(function() {
+          var val = $(this).attr('data-id');
+          if (val) {
+            allVals.push(val);
+          }
+        });
+
+        // 1. Validation Message: If no record is selected
+        if (allVals.length <= 0) {
+          if (typeof Swal !== 'undefined') {
+            Swal.fire({
+              icon: 'warning',
+              title: 'No Records Selected',
+              text: 'Please select at least one record to delete.',
+              confirmButtonColor: '#3085d6'
+            });
+          } else {
+            alert("Please select at least one record to delete.");
+          }
+          return false;
+        }
+
+        // 2. Confirmation Dialog: If records are selected
+        var countText = allVals.length === 1 ? '1 record' : allVals.length + ' records';
+        var confirmMsg = "Are you sure you want to delete " + countText + "? This action cannot be undone.";
+
+        var runDelete = function() {
+          var join_selected_values = allVals.join(",");
+          btn.prop('disabled', true).addClass('disabled');
+
+          // Highlight rows being deleted
+          $.each(allVals, function(index, value) {
+            $("#tr_" + value).css('background-color', '#ffe6e6');
+          });
+
+          $.ajax({
+            url: url,
+            type: 'DELETE',
+            data: {
+              ids: join_selected_values,
+              _token: $('meta[name="csrf-token"]').attr('content')
+            },
+            success: function(data) {
+              btn.prop('disabled', false).removeClass('disabled');
+              if (data && data['success']) {
+                // Smooth fade-out of deleted rows
+                $.each(allVals, function(index, value) {
+                  $("#tr_" + value).fadeOut("slow", function() {
+                    $(this).remove();
+                  });
+                });
+
+                // 3. Success Message: After deleted show success message
+                if (typeof Swal !== 'undefined') {
+                  Swal.fire({
+                    icon: 'success',
+                    title: 'Deleted Successfully!',
+                    text: data['success'],
+                    timer: 1500,
+                    showConfirmButton: false
+                  }).then(function() {
+                    location.reload();
+                  });
+                } else {
+                  alert(data['success']);
+                  location.reload();
+                }
+              } else if (data && data['error']) {
+                // Revert highlight on error
+                $.each(allVals, function(index, value) {
+                  $("#tr_" + value).css('background-color', '');
+                });
+                if (typeof Swal !== 'undefined') {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Deletion Failed',
+                    text: data['error']
+                  });
+                } else {
+                  alert(data['error']);
+                }
+              } else {
+                if (typeof Swal !== 'undefined') {
+                  Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: 'Whoops! Something went wrong.'
+                  });
+                } else {
+                  alert('Whoops! Something went wrong.');
+                }
+              }
+            },
+            error: function(xhr) {
+              btn.prop('disabled', false).removeClass('disabled');
+              $.each(allVals, function(index, value) {
+                $("#tr_" + value).css('background-color', '');
+              });
+
+              var errorMsg = 'Failed to delete selected records.';
+              if (xhr.responseJSON && xhr.responseJSON.error) {
+                errorMsg = xhr.responseJSON.error;
+              } else if (xhr.responseJSON && xhr.responseJSON.message) {
+                errorMsg = xhr.responseJSON.message;
+              } else if (xhr.responseText) {
+                try {
+                  var res = JSON.parse(xhr.responseText);
+                  if (res.error) errorMsg = res.error;
+                  else if (res.message) errorMsg = res.message;
+                } catch(e) {}
+              }
+
+              if (typeof Swal !== 'undefined') {
+                Swal.fire({
+                  icon: 'error',
+                  title: 'Delete Failed',
+                  text: errorMsg
+                });
+              } else {
+                alert(errorMsg);
+              }
+            }
+          });
+        };
+
+        if (typeof Swal !== 'undefined') {
+          Swal.fire({
+            title: 'Are you sure?',
+            text: confirmMsg,
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, delete!',
+            cancelButtonText: 'Cancel'
+          }).then(function(result) {
+            if (result.isConfirmed) {
+              runDelete();
+            }
+          });
+        } else {
+          if (confirm(confirmMsg)) {
+            runDelete();
+          }
+        }
+      });
     });
   </script>
 

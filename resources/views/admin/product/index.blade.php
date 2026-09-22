@@ -61,11 +61,17 @@
                   <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
                </div>
                @if(count($products)>0)
+               <div class="row" style="margin-left: 5px; margin-bottom: 10px;">
+                  <div class="col-md-9">
+                     <button class="btn btn-danger text-white delete_all" data-url="{{ url('myactivityDeleteAll') }}"><i class="fa fa-trash"></i> Delete Selected</button>
+                  </div>
+               </div>
                <!-- /.box-header -->
                <div class="box-body" style="overflow-x:auto;margin-top:15px">
                   <table id="example1" class="table table-bordered table-striped">
                      <thead class="bg-primary">
                         <tr>
+                           <th width="50px"><input type="checkbox" id="master"></th>
                            <th>Action</th>
                            <th>Image</th>
                            <th>Show</th>
@@ -73,7 +79,8 @@
                      </thead>
                      <tbody>
                         @foreach($products as $product)
-                        <tr>
+                        <tr id="tr_{{$product->id}}">
+                           <td><input type="checkbox" class="sub_chk" data-id="{{$product->id}}"></td>
                            <td>
                               <a href="{{route('admin.activity.edit', $product->id)}}"><i class="fa fa-edit" style="color:white;font-size:15px;background-color:#0275d8;padding:8px;border-radius:200px;"></i></a>
                               <a href="{{route('admin.activity.destroy', $product->id)}}" onclick="return confirm('Sure ! You want to delete ?');"><i class="fa fa-trash" style="color:white;font-size:15px;background-color:red;padding:8px;border-radius:200px;"></i></a>

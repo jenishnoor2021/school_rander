@@ -82,17 +82,17 @@
                <div class="box-header">
                   <!-- <h3 class="box-title">Data Table With Full Features</h3> -->
                </div>
-               <!-- <div class="row">
+               <div class="row">
                   <div class="col-md-9">
-                     <button style="padding:10px 20px;margin-left:10px;" class="btn btn-danger text-white delete_all" data-url="{{ url('myactivitycategoryDeleteAll') }}">Delete</button>
+                     <button style="padding:8px 16px;margin-left:10px;" class="btn btn-danger text-white delete_all" data-url="{{ url('myactivitycategoryDeleteAll') }}"><i class="fa fa-trash"></i> Delete Selected</button>
                   </div>
-               </div> -->
+               </div>
                <!-- /.box-header -->
                <div class="box-body" style="overflow-x:auto;margin-top:15px">
                   <table id="example1" class="table table-bordered table-striped">
                      <thead class="bg-primary">
                         <tr>
-                           <!-- <th width="50px"><input type="checkbox" id="master"></th> -->
+                           <th width="50px"><input type="checkbox" id="master"></th>
                            <th>Action</th>
                            <th>category</th>
                            <th>Title</th>
@@ -102,7 +102,7 @@
                      <tbody>
                         @foreach($activitys as $gallery)
                         <tr id="tr_{{$gallery->id}}">
-                           <!-- <td><input type="checkbox" class="sub_chk" data-id="{{$gallery->id}}"></td> -->
+                           <td><input type="checkbox" class="sub_chk" data-id="{{$gallery->id}}"></td>
                            <td>
                               <a href="{{route('admin.activitycategory.edit', $gallery->id)}}"><i class="fa fa-edit" style="color:white;font-size:15px;background-color:#0275d8;padding:8px;border-radius:200px;"></i></a>
                               <a href="{{route('admin.activitycategory.destroy', $gallery->id)}}" onclick="return confirm('Sure ! You want to delete ?');"><i class="fa fa-trash" style="color:white;font-size:15px;background-color:red;padding:8px;border-radius:200px;"></i></a>

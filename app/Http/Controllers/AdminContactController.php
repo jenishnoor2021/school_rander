@@ -98,14 +98,35 @@ class AdminContactController extends Controller
 
     public function mycontactDeleteAll(Request $request)
     {
-
         $ids = $request->ids;
-        $single_id = explode(",", $ids);
-        foreach ($single_id as $id) {
-            $i = Contact::findOrFail($id);
-            $i->delete();
+        if (is_string($ids)) {
+            $ids = array_filter(explode(',', $ids), 'strlen');
         }
-        return response()->json(['success' => "Deleted successfully."]);
+        if (empty($ids) || !is_array($ids)) {
+            return response()->json(['error' => 'Please select at least one record to delete.'], 422);
+        }
+
+        try {
+            \Illuminate\Support\Facades\DB::beginTransaction();
+            $deletedCount = 0;
+            foreach ($ids as $id) {
+                $i = Contact::find($id);
+                if ($i) {
+                    $i->delete();
+                    $deletedCount++;
+                }
+            }
+            \Illuminate\Support\Facades\DB::commit();
+
+            if ($deletedCount === 0) {
+                return response()->json(['error' => 'No matching records found to delete.'], 404);
+            }
+
+            return response()->json(['success' => 'Selected records have been deleted successfully.']);
+        } catch (\Exception $e) {
+            \Illuminate\Support\Facades\DB::rollBack();
+            return response()->json(['error' => 'An error occurred while deleting: ' . $e->getMessage()], 500);
+        }
     }
 
 }

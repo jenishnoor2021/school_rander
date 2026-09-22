@@ -79,16 +79,23 @@
             </div>
             @endif
             @if($selected && $items->count())
+            <div class="row" style="margin-bottom: 15px;">
+              <div class="col-md-12">
+                <button class="btn btn-danger text-white delete_all" data-url="{{ route($config['deleteAll']) }}"><i class="fa fa-trash"></i> Delete Selected</button>
+              </div>
+            </div>
             <table class="table table-bordered table-striped">
               <thead class="bg-primary">
                 <tr>
+                  <th width="50px"><input type="checkbox" id="master"></th>
                   <th>Title</th>
                   <th>Image</th>
                   <th width="150">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                @foreach($items as $item)<tr>
+                @foreach($items as $item)<tr id="tr_{{ $item->id }}">
+                  <td><input type="checkbox" class="sub_chk" data-id="{{ $item->id }}"></td>
                   <td>{{ $item->text }}</td>
                   <td>@if($item->file)<img src="{{ $item->file }}" height="50" alt="{{ $item->text }}">@endif</td>
                   <td><a href="{{ route($config['edit'], ['id' => $item->id, 'return_url' => url()->full()]) }}" class="btn btn-xs btn-primary"><i class="fa fa-edit"></i> Edit</a> <a href="{{ route($config['destroy'], $item->id) }}" class="btn btn-xs btn-danger" onclick="return confirm('Delete this item?')"><i class="fa fa-trash"></i> Delete</a></td>
