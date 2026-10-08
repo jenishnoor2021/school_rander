@@ -34,122 +34,85 @@
    <div class="container">
       <div class="section-header reveal-pop">
          <span class="section-tag"><i class="fas fa-map-marked-alt"></i> Convenient Campuses</span>
-         <h2>6 Premier Campuses Across Surat</h2>
+         <h2>{{ !empty($allbranches) && count($allbranches) > 0 ? count($allbranches) . ' Premier Campuses Across Surat' : 'Premier Campuses Across Surat' }}</h2>
          <p>Each branch upholds our strict standards of 100% child safety, hygienic play arenas, and innovative teaching.</p>
       </div>
 
       <div class="branches-wonder-grid">
-         <!-- 1. Pal Campus -->
-         <div class="branch-campus-card reveal-pop">
-            <span class="campus-pill-badge">Head Office & Main Campus</span>
-            <h3>Pal Road Campus</h3>
-            <div class="branch-detail-row">
-               <i class="fas fa-map-marker-alt"></i>
-               <span>Galaxy Imperia, Above District Bank, Pal Road, Surat - 395009.</span>
-            </div>
-            <div class="branch-detail-row">
-               <i class="fas fa-phone-alt"></i>
-               <a href="tel:+919879146666">+91 98791 46666</a>
-            </div>
-            <div class="branch-detail-row">
-               <i class="fas fa-envelope"></i>
-               <span>ssspre46666@gmail.com</span>
-            </div>
-            <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem;">
-               <a href="tel:+919879146666" class="btn-wonder btn-wonder-primary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;"><i class="fas fa-phone"></i> Call</a>
-               <a href="{{ route('enquiry') }}" class="btn-wonder btn-wonder-secondary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;">Inquire</a>
-            </div>
-         </div>
+         @php
+            $badgeStyles = [
+               '', // default saffron
+               'background: var(--bg-pill-mint); color: var(--mint);',
+               'background: var(--bg-pill-honey); color: var(--honey-dark);',
+               'background: var(--bg-pill-berry); color: var(--berry);',
+               'background: var(--bg-pill-iris); color: var(--iris);',
+               'background: var(--bg-pill-sky); color: var(--sky);',
+            ];
+         @endphp
 
-         <!-- 2. Vesu Campus -->
-         <div class="branch-campus-card reveal-pop">
-            <span class="campus-pill-badge" style="background: var(--bg-pill-mint); color: var(--mint);">Vesu Branch</span>
-            <h3>Vesu Campus</h3>
-            <div class="branch-detail-row">
-               <i class="fas fa-map-marker-alt"></i>
-               <span>Near Reliance Mall, Vesu Main Road, VIP Road Junction, Surat.</span>
-            </div>
-            <div class="branch-detail-row">
-               <i class="fas fa-phone-alt"></i>
-               <a href="tel:+919904419333">+91 99044 19333</a>
-            </div>
-            <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem;">
-               <a href="tel:+919904419333" class="btn-wonder btn-wonder-primary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;"><i class="fas fa-phone"></i> Call</a>
-               <a href="{{ route('enquiry') }}" class="btn-wonder btn-wonder-secondary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;">Inquire</a>
-            </div>
-         </div>
+         @forelse($allbranches as $branch)
+            @php
+               $badgeStyle = $badgeStyles[$loop->index % count($badgeStyles)];
+               $rawMobile = data_get($branch, 'mobile', '');
+               $phones = !empty($rawMobile) ? preg_split('/[,|\/]/', $rawMobile) : [];
+               $firstPhone = trim($phones[0] ?? '');
+               $cleanPhone = preg_replace('/[^0-9+]/', '', $firstPhone);
+               $branchTitle = data_get($branch, 'branch', '');
+               $schoolName = data_get($branch, 'school_name', '');
+               $address = data_get($branch, 'address', '');
+               $website = data_get($branch, 'website', '');
+               $email = data_get($branch, 'email', '');
+            @endphp
+            <!-- {{ $loop->iteration }}. {{ $branchTitle ?: $schoolName }} -->
+            <div class="branch-campus-card reveal-pop">
+               @if(!empty($branchTitle))
+                  <span class="campus-pill-badge" @if(!empty($badgeStyle)) style="{{ $badgeStyle }}" @endif>{{ $branchTitle }}</span>
+               @endif
+               <h3>{{ $schoolName ?: $branchTitle }}</h3>
 
-         <!-- 3. Adajan Campus -->
-         <div class="branch-campus-card reveal-pop">
-            <span class="campus-pill-badge" style="background: var(--bg-pill-honey); color: var(--honey-dark);">Adajan Branch</span>
-            <h3>Adajan Campus</h3>
-            <div class="branch-detail-row">
-               <i class="fas fa-map-marker-alt"></i>
-               <span>Opp. Prime Arcade, Anand Mahal Road, Adajan, Surat - 395009.</span>
-            </div>
-            <div class="branch-detail-row">
-               <i class="fas fa-phone-alt"></i>
-               <a href="tel:+919879146666">+91 98791 46666</a>
-            </div>
-            <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem;">
-               <a href="tel:+919879146666" class="btn-wonder btn-wonder-primary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;"><i class="fas fa-phone"></i> Call</a>
-               <a href="{{ route('enquiry') }}" class="btn-wonder btn-wonder-secondary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;">Inquire</a>
-            </div>
-         </div>
+               @if(!empty($address))
+                  <div class="branch-detail-row">
+                     <i class="fas fa-map-marker-alt"></i>
+                     <span>{!! nl2br(e($address)) !!}</span>
+                  </div>
+               @endif
 
-         <!-- 4. Katargam Campus -->
-         <div class="branch-campus-card reveal-pop">
-            <span class="campus-pill-badge" style="background: var(--bg-pill-berry); color: var(--berry);">Katargam Branch</span>
-            <h3>Katargam Campus</h3>
-            <div class="branch-detail-row">
-               <i class="fas fa-map-marker-alt"></i>
-               <span>Gajera Circle, Near Laxmi Enclave, Katargam, Surat - 395004.</span>
-            </div>
-            <div class="branch-detail-row">
-               <i class="fas fa-phone-alt"></i>
-               <a href="tel:+919904419333">+91 99044 19333</a>
-            </div>
-            <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem;">
-               <a href="tel:+919904419333" class="btn-wonder btn-wonder-primary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;"><i class="fas fa-phone"></i> Call</a>
-               <a href="{{ route('enquiry')}}" class="btn-wonder btn-wonder-secondary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;">Inquire</a>
-            </div>
-         </div>
+               @if(!empty($rawMobile))
+                  <div class="branch-detail-row">
+                     <i class="fas fa-phone-alt"></i>
+                     <a href="tel:{{ $cleanPhone }}">{{ $rawMobile }}</a>
+                  </div>
+               @endif
 
-         <!-- 5. Varachha Campus -->
-         <div class="branch-campus-card reveal-pop">
-            <span class="campus-pill-badge" style="background: var(--bg-pill-iris); color: var(--iris);">Varachha Branch</span>
-            <h3>Varachha Campus</h3>
-            <div class="branch-detail-row">
-               <i class="fas fa-map-marker-alt"></i>
-               <span>Mini Bazar, Near Poddar Arcade, Varachha Main Road, Surat.</span>
-            </div>
-            <div class="branch-detail-row">
-               <i class="fas fa-phone-alt"></i>
-               <a href="tel:+919879146666">+91 98791 46666</a>
-            </div>
-            <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem;">
-               <a href="tel:+919879146666" class="btn-wonder btn-wonder-primary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;"><i class="fas fa-phone"></i> Call</a>
-               <a href="{{ route('enquiry')}}" class="btn-wonder btn-wonder-secondary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;">Inquire</a>
-            </div>
-         </div>
+               @if(!empty($email))
+                  <div class="branch-detail-row">
+                     <i class="fas fa-envelope"></i>
+                     <a href="mailto:{{ $email }}">{{ $email }}</a>
+                  </div>
+               @endif
 
-         <!-- 6. Althan Campus -->
-         <div class="branch-campus-card reveal-pop">
-            <span class="campus-pill-badge" style="background: var(--bg-pill-sky); color: var(--sky);">Althan Branch</span>
-            <h3>Althan Campus</h3>
-            <div class="branch-detail-row">
-               <i class="fas fa-map-marker-alt"></i>
-               <span>Near Bhimrad Canal Road, Althan-Bhimrad Road, Surat.</span>
+               @if(!empty($website))
+                  <div class="branch-detail-row">
+                     <i class="fas fa-globe"></i>
+                     <a href="{{ $website }}" target="_blank" rel="noopener noreferrer" style="word-break: break-all;">{{ $website }}</a>
+                  </div>
+               @endif
+
+               <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem; flex-wrap: wrap;">
+                  @if(!empty($cleanPhone))
+                     <a href="tel:{{ $cleanPhone }}" class="btn-wonder btn-wonder-primary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;"><i class="fas fa-phone"></i> Call</a>
+                  @endif
+                  <a href="{{ route('enquiry') }}" class="btn-wonder btn-wonder-secondary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;">Inquire</a>
+                  @if(!empty($website))
+                     <a href="{{ $website }}" target="_blank" rel="noopener noreferrer" class="btn-wonder" style="font-size: 0.85rem; padding: 0.5rem 1.15rem; background: var(--bg-cream); color: var(--navy); border: 1.5px solid var(--border-paper);"><i class="fas fa-arrow-up-right-from-square"></i> Visit Site</a>
+                  @endif
+               </div>
             </div>
-            <div class="branch-detail-row">
-               <i class="fas fa-phone-alt"></i>
-               <a href="tel:+919904419333">+91 99044 19333</a>
+         @empty
+            <div style="grid-column: 1 / -1; text-align: center; padding: 3rem 1rem;">
+               <p style="font-size: 1.1rem; color: var(--text-muted);">No branch information available at the moment.</p>
             </div>
-            <div style="margin-top: 1.25rem; display: flex; gap: 0.75rem;">
-               <a href="tel:+919904419333" class="btn-wonder btn-wonder-primary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;"><i class="fas fa-phone"></i> Call</a>
-               <a href="{{ route('enquiry') }}" class="btn-wonder btn-wonder-secondary" style="font-size: 0.85rem; padding: 0.5rem 1.15rem;">Inquire</a>
-            </div>
-         </div>
+         @endforelse
       </div>
    </div>
 </section>

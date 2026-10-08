@@ -144,8 +144,12 @@ class AdminController extends Controller
 
     public function branches(Request $request)
     {
-        $response = Http::post('https://sunrisegroupofschools.org/api/get_branch_data/adajancom');
-        $allbranches = $response['data'];
+        try {
+            $response = Http::timeout(10)->post('https://sunrisegroupofschools.org/api/get_branch_data/adajancom');
+            $allbranches = $response->successful() && isset($response['data']) ? $response['data'] : [];
+        } catch (\Exception $e) {
+            $allbranches = [];
+        }
         return view('frontend.branches', compact('allbranches'));
     }
 
